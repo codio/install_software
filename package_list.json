@@ -1,0 +1,17 @@
+{
+  "xserver": {
+      "name": "X server",
+      "description": "Virtual X Server and vnc client to connect to. Allows to start GUI apps in the box",
+      "script": "xserver/install.sh",
+      "version": "0.0.1",
+      "tags": ["dev", "ui"]
+  },
+  "apache": {
+      "name": "HTTP Apache 2 server",
+      "description": "A secure, efficient and extensible server that provides HTTP services in sync with the current HTTP standards.",
+      "script": "apache/install.sh",
+      "version": "0.0.1",
+      "tags": ["web", "dev"]
+
+  }
+}
