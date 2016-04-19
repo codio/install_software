@@ -1,0 +1,13 @@
+---
+- hosts: 127.0.0.1
+  sudo: true
+  tasks:
+    - apt: name=python state=present
+    - apt: name=python-dev state=present
+    - apt: name=python-pip state=present
+    - apt: name=python-setuptools state=present
+    - apt: name=python-numpy state=present
+    - apt: name=python-scipy state=present
+    - apt: name=python-tk state=present
+    - apt: name=ipython state=present
+

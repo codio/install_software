@@ -47,5 +47,5 @@ fi
 
 download_playbook
 
-do_cmd sudo ansible-playbook -v ${COOKBOOK_PATH}/install_software-${BRANCH}/$1/playbook.yaml
+sudo ansible-playbook -v ${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml
 

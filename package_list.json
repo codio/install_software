@@ -15,7 +15,27 @@
         "script": "apache/install.sh",
         "version": "0.0.1",
         "category": "web_development"
-
+      },
+      "python2": {
+        "name": "Python2 tools set",
+        "description": "Set of tools for python2 development.",
+        "script": "python2/install.sh",
+        "version": "0.0.1",
+        "category": "web_development"
+      },
+      "python2": {
+        "name": "Python3 tools set",
+        "description": "Set of tools for python3 development.",
+        "script": "python3/install.sh",
+        "version": "0.0.1",
+        "category": "web_development"
+      },
+      "zsh": {
+        "name": "Zsh shell",
+        "description": "Zsh is a shell designed for interactive use, although it is also a powerful scripting language.",
+        "scrit": "zsh/install.sh",
+        "version": "0.0.1",
+        "category": "tools"
       }
-    }
+   }
 }
