@@ -10,4 +10,4 @@
     - apt: name=python3-scipy state=present
     - apt: name=python3-tk state=present
     - apt: name=ipython3 state=present
-
+    - apt: name=build-essential state=present

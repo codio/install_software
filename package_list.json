@@ -23,7 +23,7 @@
         "version": "0.0.1",
         "category": "web_development"
       },
-      "python2": {
+      "python3": {
         "name": "Python3 tools set",
         "description": "Set of tools for python3 development.",
         "script": "python3/install.sh",
