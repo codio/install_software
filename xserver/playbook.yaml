@@ -1,0 +1,23 @@
+---
+- hosts: 127.0.0.1
+  sudo: true
+  tasks:
+    - apt: name=xvfb state=present
+    - apt: name=x11vnc state=present
+    - apt: name=openbox state=present
+    - apt: name=python-dev state=present
+    - apt: name=python-pip state=present
+    - apt: name=python-numpy state=present
+    - pip: name=websockify state=present
+    - stat: path=/opt/novnc/noVNC-master
+      register: novnc
+    - name: Creates novnc directory
+      file: path=/opt/novnc state=directory
+    - name: Download novnc
+      shell: curl -fsSL https://github.com/kanaka/noVNC/archive/master.tar.gz | tar zxf - -C /opt/novnc
+      when: novnc.stat.exists == False
+    - copy: src=openbox.conf dest=/etc/init/openbox.conf
+    - copy: src=x11vnc.conf dest=/etc/init/x11vnc.conf
+    - copy: src=novnc-3000.conf dest=/etc/init/novnc-3000.conf
+    - copy: src=novnc.conf dest=/etc/init/novnc.conf
+    - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
