@@ -1,0 +1,7 @@
+---
+- hosts: 127.0.0.1
+  sudo: True
+  tasks:
+    - copy: src=mongo.conf dest=/etc/init/mongo.override
+    - copy: src=mongo.conf dest=/etc/init/mongodb.override
+    - apt: name=mongodb state=present

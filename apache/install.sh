@@ -1,4 +1,3 @@
 #!/bin/bash
 
-apt-get -y update || true
-apt-get install -y apache2 || true
+sh -c "$(curl -fsSL https://raw.github.com/codio/install_software/master/tools/ansible.sh)" apache
