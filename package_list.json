@@ -6,49 +6,49 @@
         "name": "X server",
         "description": "Virtual X Server and vnc client to connect to. Allows to start GUI apps in the box",
         "script": "xserver/install.sh",
-        "version": "0.0.1",
+        "version": "1.1.7,
         "category": "utilities"
       },
       "apache": {
         "name": "HTTP Apache 2 server",
         "description": "A secure, efficient and extensible server that provides HTTP services in sync with the current HTTP standards.",
         "script": "apache/install.sh",
-        "version": "0.0.1",
+        "version": "2.4.7",
         "category": "web_development"
       },
       "python2": {
         "name": "Python2 tools set",
         "description": "Set of tools for python2 development.",
         "script": "python2/install.sh",
-        "version": "0.0.1",
+        "version": "2.7.9",
         "category": "programming_languages"
       },
       "python3": {
         "name": "Python3 tools set",
         "description": "Set of tools for python3 development.",
         "script": "python3/install.sh",
-        "version": "0.0.1",
+        "version": "3.4.3",
         "category": "programming_languages"
       },
       "zsh": {
         "name": "Zsh shell",
         "description": "Zsh is a shell designed for interactive use, although it is also a powerful scripting language.",
         "script": "zsh/install.sh",
-        "version": "0.0.1",
+        "version": "5.0.2",
         "category": "shells"
       },
       "mongo": {
         "name": "MongoDB",
         "description": "MongoDB (from humongous) is a cross-platform document-oriented database. Classified as a NoSQL database.",
         "script": "mongo/install.sh",
-        "version": "0.0.1",
+        "version": "2.4.9",
         "category": "data_stores"
       },
       "mysql": {
         "name": "MySQL",
         "description": "MySQL is an open-source relational database management system (RDBMS)",
         "script": "mysql/install.sh",
-        "version": "0.0.1",
+        "version": "5.5.49",
         "category": "data_stores"
       }
    }
