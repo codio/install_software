@@ -6,7 +6,7 @@
         "name": "X server",
         "description": "Virtual X Server and vnc client to connect to. Allows to start GUI apps in the box",
         "script": "xserver/install.sh",
-        "version": "1.1.7,
+        "version": "1.1.7",
         "category": "utilities"
       },
       "apache": {
