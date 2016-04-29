@@ -7,7 +7,7 @@
         "description": "Virtual X Server and vnc client to connect to. Allows to start GUI apps in the box",
         "script": "xserver/install.sh",
         "version": "0.0.1",
-        "category": "web_development"
+        "category": "utilities"
       },
       "apache": {
         "name": "HTTP Apache 2 server",
@@ -21,35 +21,35 @@
         "description": "Set of tools for python2 development.",
         "script": "python2/install.sh",
         "version": "0.0.1",
-        "category": "web_development"
+        "category": "programming_languages"
       },
       "python3": {
         "name": "Python3 tools set",
         "description": "Set of tools for python3 development.",
         "script": "python3/install.sh",
         "version": "0.0.1",
-        "category": "web_development"
+        "category": "programming_languages"
       },
       "zsh": {
         "name": "Zsh shell",
         "description": "Zsh is a shell designed for interactive use, although it is also a powerful scripting language.",
         "script": "zsh/install.sh",
         "version": "0.0.1",
-        "category": "tools"
+        "category": "shells"
       },
       "mongo": {
         "name": "MongoDB",
         "description": "MongoDB (from humongous) is a cross-platform document-oriented database. Classified as a NoSQL database.",
         "script": "mongo/install.sh",
         "version": "0.0.1",
-        "category": "web_development"
+        "category": "data_stores"
       },
       "mysql": {
         "name": "MySQL",
         "description": "MySQL is an open-source relational database management system (RDBMS)",
         "script": "mysql/install.sh",
         "version": "0.0.1",
-        "category": "web_development"
+        "category": "data_stores"
       }
    }
 }
