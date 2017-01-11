@@ -39,7 +39,7 @@ download_playbook()
 if [ ! -f /var/codio/ansible ]; then
     do_cmd sudo apt-get update
 	do_cmd sudo apt-get -y install wget python python-support python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko sshpass
-	do_cmd sudo wget -O /tmp/ansible.deb https://launchpad.net/~ansible/+archive/ubuntu/ansible/+files/ansible_2.0.1.0-1ppa~trusty_all.deb
+	do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/master/tools/ansible_2.2.0.0-1ppa~trusty_all.deb
 	do_cmd sudo dpkg -i /tmp/ansible.deb
 	do_cmd sudo mkdir -p /var/codio
 	do_cmd sudo touch /var/codio/ansible
