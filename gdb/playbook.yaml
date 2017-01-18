@@ -2,4 +2,8 @@
 - hosts: 127.0.0.1
   sudo: true
   tasks:
-    - apt: name=gdb state=present
+    - name: Install dependencies
+      apt: name={{item}} state=present
+      with_items:
+        - build-essential
+        - gdb
