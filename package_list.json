@@ -30,6 +30,20 @@
         "version": "3.4.3",
         "category": "programming_languages"
       },
+      "openjdk8": {
+        "name": "Java 8 (OpenJDK)",
+        "description": "Java is a general purpose, high-level programming language.",
+        "script": "openjdk/install.sh",
+        "version": "8",
+        "category": "programming_languages"
+      },
+      "nodejs": {
+        "name": "NodeJS",
+        "description": "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.",
+        "script": "nodejs/install.sh",
+        "version": "6",
+        "category": "programming_languages"
+      },
       "zsh": {
         "name": "Zsh shell",
         "description": "Zsh is a shell designed for interactive use, although it is also a powerful scripting language.",
