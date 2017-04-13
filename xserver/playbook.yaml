@@ -23,10 +23,11 @@
     - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
     - pip: name=commentjson state=present
     - name: Put Virtual Desktop to the preview targets
-      add_preview_to_codio: 
+      add_preview_to_codio:
     - name: Restore .codio permissions
       file:
         path: /home/codio/workspace/.codio
         owner: codio
         group: codio
-      
+    - name: Reboot the container to apply new variables and start services
+      shell: sudo reboot
