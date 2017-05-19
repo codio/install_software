@@ -14,7 +14,7 @@
     - name: Creates novnc directory
       file: path=/opt/novnc state=directory
     - name: Download novnc
-      shell: curl -fsSL https://github.com/kanaka/noVNC/archive/master.tar.gz | tar zxf - -C /opt/novnc
+      shell: curl -fsSL https://github.com/novnc/noVNC/archive/v0.6.2.tar.gz | tar zxf - -C /opt/novnc
       when: novnc.stat.exists == False
     - copy: src=openbox.conf dest=/etc/init/openbox.conf
     - copy: src=x11vnc.conf dest=/etc/init/x11vnc.conf
@@ -23,10 +23,9 @@
     - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
     - pip: name=commentjson state=present
     - name: Put Virtual Desktop to the preview targets
-      add_preview_to_codio: 
+      add_preview_to_codio:
     - name: Restore .codio permissions
       file:
         path: /home/codio/workspace/.codio
         owner: codio
         group: codio
-      
