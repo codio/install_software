@@ -71,6 +71,13 @@
         "script": "mysql/install.sh",
         "version": "5.5.49",
         "category": "data_stores"
+      },
+      "python-lsp": {
+        "name": "Language Server for python",
+        "description": "A Python 2.7 and 3.4+ implementation of the Language Server Protocol making use of Jedi, pycodestyle, Pyflakes and YAPF.",
+        "script": "python-lsp/install.sh",
+        "version": "0.4.2",
+        "category": "utilities"
       }
    }
 }
