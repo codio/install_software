@@ -29,14 +29,25 @@
            - opam
 
     - name: install merlin
+      become: yes
+      become_user: codio
       shell: |
+        opam init
+        opam depext conf-m4.1
         opam install merlin
-        opam user-setup install
+
+    - name: add /home/codio/.opam/system/bin/ to path
+        lineinfile: >
+        dest=/etc/environment
+        state=present
+        backrefs=yes
+        regexp='PATH=(["]*)((?!.*?/home/codio/.opam/system/bin/).*?)(["]*)$'
+        line="PATH=\1\2:/home/codio/.opam/system/bin/\3"
 
     - file: path=/usr/share/ocaml-language-server state=directory
 
     - unarchive:
-        src: https://s3.amazonaws.com/codio-resources/org.eclipse.jdt.ls.tar.gz
+        src: https://s3.amazonaws.com/codio-resources/ocaml-language-server.tar.gz
         dest: /usr/share/ocaml-language-server
         remote_src: True
         creates: /usr/share/ocaml-language-server/out/src/server/index.js
