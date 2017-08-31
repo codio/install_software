@@ -9,7 +9,18 @@
     - name: Update alternatives
       become: yes
       shell: update-java-alternatives -s java-1.8.0-openjdk-amd64
+
+    - file: path=/usr/share/org.eclipse.jdt.ls state=directory
+
     - unarchive:
-      src: https://s3.amazonaws.com/codio-resources/org.eclipse.jdt.ls.tar.gz
-      dest: /usr/share/org.eclipse.jdt.ls
-      remote_src: True
+        src: https://s3.amazonaws.com/codio-resources/org.eclipse.jdt.ls.tar.gz
+        dest: /usr/share/org.eclipse.jdt.ls
+        remote_src: True
+        creates: /usr/share/org.eclipse.jdt.ls/content.xml
+
+    - file:
+        path: /usr/share/org.eclipse.jdt.ls
+        state: directory
+        recurse: True
+        owner: codio
+        group: codio
