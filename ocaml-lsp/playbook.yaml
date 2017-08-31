@@ -35,14 +35,7 @@
         opam init
         opam depext conf-m4.1
         opam install merlin
-
-    - name: add /home/codio/.opam/system/bin/ to path
-        lineinfile: >
-        dest=/etc/environment
-        state=present
-        backrefs=yes
-        regexp='PATH=(["]*)((?!.*?/home/codio/.opam/system/bin/).*?)(["]*)$'
-        line="PATH=\1\2:/home/codio/.opam/system/bin/\3"
+        eval `opam config env`
 
     - file: path=/usr/share/ocaml-language-server state=directory
 
