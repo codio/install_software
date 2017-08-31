@@ -1,0 +1,15 @@
+---
+- hosts: 127.0.0.1
+  sudo: true
+  tasks:
+    - apt_repository:
+        repo: 'ppa:openjdk-r/ppa'
+        update_cache: yes
+    - apt: name=openjdk-8-jdk state=latest
+    - name: Update alternatives
+      become: yes
+      shell: update-java-alternatives -s java-1.8.0-openjdk-amd64
+    - unarchive:
+      src: https://s3.amazonaws.com/codio-resources/org.eclipse.jdt.ls.tar.gz
+      dest: /usr/share/org.eclipse.jdt.ls
+      remote_src: True

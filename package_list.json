@@ -78,6 +78,13 @@
         "script": "python-lsp/install.sh",
         "version": "0.4.2",
         "category": "utilities"
+      },
+      "java-lsp": {
+        "name": "Language Server for java",
+        "description": "The Eclipse JDT Language Server is a Java language specific implementation of the Language Server Protocol.",
+        "script": "java-lsp/install.sh",
+        "version": "0.3.0",
+        "category": "utilities"
       }
    }
 }
