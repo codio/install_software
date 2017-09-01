@@ -29,18 +29,9 @@
            - opam
            - m4
 
-    - name: install merlin
-      become: yes
-      become_user: codio
-      command: "{{item}}"
-      with_items:
-           - whoami
-           - opam install depext
-           - opam depext conf-m4.1
-           - opam install -y merlin
-           - opam init -a
-
-    - raw: eval `opam config env`
+    - copy: src=opam.sh dest=/tmp/opam.sh mode="u+xrw,g+x,o+x"
+    - command: /tmp/opam.sh
+    - file: src=/tmp/opam.sh state=absent
 
     - file: path=/usr/share/ocaml-language-server state=directory
 
