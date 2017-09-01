@@ -39,7 +39,6 @@
            - opam depext conf-m4.1
            - opam install -y merlin
            - opam init -a
-           - eval `opam config env`
 
     - raw: eval `opam config env`
 
