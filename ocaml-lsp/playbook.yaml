@@ -27,15 +27,21 @@
            - ocaml-native-compilers
            - camlp4-extra
            - opam
+           - m4
 
     - name: install merlin
       become: yes
       become_user: codio
-      shell: |
-        opam init
-        opam depext conf-m4.1
-        opam install merlin
-        eval `opam config env`
+      command: "{{item}}"
+      with_items:
+           - whoami
+           - opam install depext
+           - opam depext conf-m4.1
+           - opam install -y merlin
+           - opam init -a
+           - eval `opam config env`
+
+    - raw: eval `opam config env`
 
     - file: path=/usr/share/ocaml-language-server state=directory
 
