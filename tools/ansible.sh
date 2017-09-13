@@ -1,7 +1,7 @@
 #!/bin/bash
 
 COOKBOOK_PATH=/tmp/codio_playbook
-BRANCH=8968_lsp
+BRANCH=master
 
 do_cmd()
 {
