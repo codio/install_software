@@ -36,7 +36,9 @@ download_playbook()
    curl -fsSL https://github.com/codio/install_software/archive/${BRANCH}.tar.gz  | tar zxf - -C ${COOKBOOK_PATH}
 }
 
-if [ ! -f /var/codio/ansible ]; then
+ansible --version | grep '2.2.0.0' 2> /dev/null
+is_ansible_right = $?
+if [ ! -f /var/codio/ansible ] || [ is_ansible_right -eq 1 ]; then
     do_cmd sudo apt-get update
 	do_cmd sudo apt-get -y install wget python python-support python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko sshpass
 	do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/master/tools/ansible_2.2.0.0-1ppa~trusty_all.deb
