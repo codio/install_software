@@ -32,7 +32,7 @@
 
     - copy: src=opam.sh dest=/tmp/opam.sh mode="u+xrw,g+x,o+x"
 
-    - name: "Install Ocaml Dependensies"
+    - name: "Install OCaml Deps"
       command: /tmp/opam.sh
       become: yes
       become_user: codio
