@@ -1,0 +1,54 @@
+---
+- hosts: 127.0.0.1
+  sudo: true
+  tasks:
+    - apt: name=ca-certificates state=latest
+    - apt: name=apt-transport-https state=present
+    - name: Add apt key for nodesource
+      become: yes
+      shell: curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+    - name: Add repo for nodesource
+      apt_repository:
+        repo: 'deb https://deb.nodesource.com/node_6.x {{ ansible_distribution_release }} main'
+        update_cache: yes
+
+    - name: Install nodejs
+      apt: name=nodejs state=latest
+
+    - name: Add repo for opam
+      apt_repository:
+        repo: 'ppa:avsm/ppa'
+        update_cache: yes
+
+    - name: Install opam deps
+      apt: name={{item}} state=installed
+      with_items:
+           - ocaml
+           - ocaml-native-compilers
+           - camlp4-extra
+           - opam
+           - m4
+
+    - copy: src=opam.sh dest=/tmp/opam.sh mode="u+xrw,g+x,o+x"
+    - command: /tmp/opam.sh
+    - file: path=/tmp/opam.sh state=absent
+
+    - file: path=/usr/share/ocaml-language-server state=directory
+
+    - unarchive:
+        src: https://s3.amazonaws.com/codio-resources/ocaml-language-server.tar.gz
+        dest: /usr/share/ocaml-language-server
+        remote_src: True
+        creates: /usr/share/ocaml-language-server/out/src/server/index.js
+
+    - file:
+        path: /usr/share/ocaml-language-server
+        state: directory
+        recurse: True
+        owner: codio
+        group: codio
+
+    - file:
+        path: /usr/share/ocaml-language-server/out/src/server/index.js
+        state: touch
+        mode: "u+x,g+x,o+x"

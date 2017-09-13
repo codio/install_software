@@ -71,6 +71,27 @@
         "script": "mysql/install.sh",
         "version": "5.5.49",
         "category": "data_stores"
+      },
+      "python-lsp": {
+        "name": "Language Server for Python",
+        "description": "A Python 2.7 and 3.4+ implementation of the Language Server Protocol making use of Jedi, pycodestyle, Pyflakes and YAPF.",
+        "script": "python-lsp/install.sh",
+        "version": "0.4.2",
+        "category": "utilities"
+      },
+      "java-lsp": {
+        "name": "Language Server for Java",
+        "description": "The Eclipse JDT Language Server is a Java language specific implementation of the Language Server Protocol.",
+        "script": "java-lsp/install.sh",
+        "version": "0.3.0",
+        "category": "utilities"
+      },
+      "ocaml-lsp": {
+        "name": "Language Server for OCaml",
+        "description": "A language server for OCaml and related languages.",
+        "script": "ocaml-lsp/install.sh",
+        "version": "0.3.0",
+        "category": "utilities"
       }
    }
 }
