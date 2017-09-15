@@ -36,6 +36,8 @@
       command: /tmp/opam.sh
       become: yes
       become_user: codio
+      become_method: su
+      become_flags: -l
 
     - file: path=/tmp/opam.sh state=absent
 
