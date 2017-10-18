@@ -2,6 +2,7 @@
 - hosts: 127.0.0.1
   sudo: true
   tasks:
+    - apt: update_cache=yes
     - apt: name=xvfb state=present
     - apt: name=x11vnc state=present
     - apt: name=openbox state=present
