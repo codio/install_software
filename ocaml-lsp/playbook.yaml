@@ -2,6 +2,7 @@
 - hosts: 127.0.0.1
   sudo: true
   tasks:
+    - apt: update_cache=yes
     - apt: name=ca-certificates state=latest
     - apt: name=apt-transport-https state=present
     - name: Add apt key for nodesource
