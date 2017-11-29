@@ -10,6 +10,7 @@
     - apt: name=python-pip state=present
     - apt: name=python-numpy state=present
     - pip: name=websockify state=present
+    - apt: name=xterm state=absent
     - stat: path=/opt/novnc/noVNC-master
       register: novnc
     - name: Creates novnc directory
