@@ -23,6 +23,7 @@
     - copy: src=novnc-3000.conf dest=/etc/init/novnc-3000.conf
     - copy: src=novnc.conf dest=/etc/init/novnc.conf
     - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
+    - copy: src=rc.xml dest=/etc/xdg/openbox/rc.xml
     - pip: name=commentjson state=present
     - name: Put Virtual Desktop to the preview targets
       add_preview_to_codio:
