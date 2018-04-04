@@ -20,6 +20,7 @@
     - copy: src=openbox.conf dest=/etc/init/openbox.conf
     - copy: src=x11vnc.conf dest=/etc/init/x11vnc.conf
     - copy: src=novnc-3000.conf dest=/etc/init/novnc-3000.conf
+    - file: path=/etc/init/novnc.conf state=absent
     - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
     - copy: src=rc.xml dest=/etc/xdg/openbox/rc.xml
     - pip: name=commentjson state=present
