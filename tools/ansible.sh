@@ -1,7 +1,11 @@
 #!/bin/bash
 
 COOKBOOK_PATH=/tmp/codio_playbook
-BRANCH=master
+BRANCH=9995_updates
+
+IS_TRUSTY () { lsb_release -a | grep trusty }
+IS_XENIAL () { lsb_release -a | grep xenial }
+IS_BIONIC () { lsb_release -a | grep bionic }
 
 do_cmd()
 {
@@ -36,12 +40,28 @@ download_playbook()
    curl -fsSL https://github.com/codio/install_software/archive/${BRANCH}.tar.gz  | tar zxf - -C ${COOKBOOK_PATH}
 }
 
-ansible --version | grep '2.2.0.0' 2> /dev/null
+if IS_TRUSTY; then
+    ansible --version | grep '2.2.0.0' 2> /dev/null
+fi
+if IS_XENIAL; then
+    ansible --version | grep '2.7.5.0' 2> /dev/null
+fi
+if IS_BIONIC; then
+    ansible --version | grep '2.7.5.0' 2> /dev/null
+fi
 is_ansible_right=$?
 if [ $is_ansible_right -ne 0 ]; then
     do_cmd sudo apt-get update
 	do_cmd sudo apt-get -y install wget python python-support python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko sshpass
-	do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/master/tools/ansible_2.2.0.0-1ppa~trusty_all.deb
+    if IS_TRUSTY; then
+        do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.2.0.0-1ppa~trusty_all.deb
+    fi
+    if IS_XENIAL; then
+        do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5.0-1ppa~trusty_all.deb
+    fi
+    if IS_BIONIC; then
+        do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5.0-1ppa~trusty_all.deb
+    fi
 	do_cmd sudo dpkg -i /tmp/ansible.deb
     do_cmd sudo rm /tmp/ansible.deb
 fi
