@@ -52,14 +52,16 @@ fi
 is_ansible_right=$?
 if [ $is_ansible_right -ne 0 ]; then
     do_cmd sudo apt-get update
-	do_cmd sudo apt-get -y install wget python python-support python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko sshpass
     if IS_TRUSTY; then
+        do_cmd sudo apt-get -y install wget python python-support python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko sshpass
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.2.0.0-1ppa~trusty_all.deb
     fi
     if IS_XENIAL; then
+        do_cmd sudo apt-get -y install wget python3 python3-yaml python3-httplib2 python3-setuptools python3-markupsafe python3-jinja2 python3-paramiko sshpass
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5.0-1ppa~trusty_all.deb
     fi
     if IS_BIONIC; then
+        do_cmd sudo apt-get -y install wget python3 python3-yaml python3-httplib2 python3-setuptools python3-markupsafe python3-jinja2 python3-paramiko sshpass
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5.0-1ppa~trusty_all.deb
     fi
 	do_cmd sudo dpkg -i /tmp/ansible.deb
@@ -68,5 +70,8 @@ fi
 
 download_playbook
 
-sudo ansible-playbook -v ${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml
-
+if IS_TRUSTY; then
+    sudo ansible-playbook -v ${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml
+else
+    sudo ansible-playbook -v ${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml -e 'ansible_python_interpreter=/usr/bin/python3'
+fi
