@@ -3,9 +3,9 @@
 COOKBOOK_PATH=/tmp/codio_playbook
 BRANCH=9995_updates
 
-TRUSTY=$(lsb_release -a | grep trusty)
-XENIAL=$(lsb_release -a | grep xenial)
-BIONIC=$(lsb_release -a | grep bionic)
+TRUSTY=$(lsb_release -a  2> /dev/null | grep trusty)
+XENIAL=$(lsb_release -a  2> /dev/null | grep xenial)
+BIONIC=$(lsb_release -a  2> /dev/null | grep bionic)
 
 IS_TRUSTY() { [ -n "${TRUSTY}" ]; }
 IS_XENIAL() { [ -n "${XENIAL}" ]; }
@@ -48,10 +48,10 @@ if IS_TRUSTY; then
     ansible --version | grep '2.2.0.0' 2> /dev/null
 fi
 if IS_XENIAL; then
-    ansible --version | grep '2.7.5.0' 2> /dev/null
+    ansible --version | grep '2.7.5' 2> /dev/null
 fi
 if IS_BIONIC; then
-    ansible --version | grep '2.7.5.0' 2> /dev/null
+    ansible --version | grep '2.7.5' 2> /dev/null
 fi
 is_ansible_right=$?
 if [ $is_ansible_right -ne 0 ]; then
@@ -61,11 +61,11 @@ if [ $is_ansible_right -ne 0 ]; then
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.2.0.0-1ppa~trusty_all.deb
     fi
     if IS_XENIAL; then
-        do_cmd sudo apt-get -y install wget python3 python3-yaml python3-httplib2 python3-setuptools python3-markupsafe python3-jinja2 python3-paramiko sshpass
+        do_cmd sudo apt-get -y install wget python3 python3-crypto python3-yaml python3-httplib2 python3-setuptools python3-markupsafe python3-jinja2 python3-paramiko sshpass
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5-1ppa_xenial_all.deb
     fi
     if IS_BIONIC; then
-        do_cmd sudo apt-get -y install wget python3 python3-yaml python3-httplib2 python3-setuptools python3-markupsafe python3-jinja2 python3-paramiko sshpass
+        do_cmd sudo apt-get -y install wget python3 python3-crypto python3-yaml python3-httplib2 python3-setuptools python3-markupsafe python3-jinja2 python3-paramiko sshpass
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5-1ppa_bionic_all.deb
     fi
     do_cmd sudo dpkg -i /tmp/ansible.deb
