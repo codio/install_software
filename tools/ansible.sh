@@ -77,5 +77,5 @@ download_playbook
 if IS_TRUSTY; then
     sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml"
 else
-    sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml -e 'ansible_python_interpreter=/usr/bin/python3'"
+    sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml" -e 'ansible_python_interpreter=/usr/bin/python3'
 fi
