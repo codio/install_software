@@ -3,32 +3,36 @@
 COOKBOOK_PATH=/tmp/codio_playbook
 BRANCH=9995_updates
 
-IS_TRUSTY () { lsb_release -a | grep trusty }
-IS_XENIAL () { lsb_release -a | grep xenial }
-IS_BIONIC () { lsb_release -a | grep bionic }
+TRUSTY=$(lsb_release -a | grep trusty)
+XENIAL=$(lsb_release -a | grep xenial)
+BIONIC=$(lsb_release -a | grep bionic)
+
+IS_TRUSTY() { [ -n "${TRUSTY}" ]; }
+IS_XENIAL() { [ -n "${XENIAL}" ]; }
+IS_BIONIC() { [ -n "${BIONIC}" ]; }
 
 do_cmd()
 {
-	echo "Running [ $@ ]"
+    echo "Running [ $* ]"
     "$@"
     ret=$?
     if [[ $ret -eq 0 ]]
     then
-        echo "Successfully ran [ $@ ]"
+        echo "Successfully ran [ $* ]"
     else
-        echo "Error: Command [ $@ ] returned $ret"
-        echo "One more attempt for [ $@ ] after delay"
+        echo "Error: Command [ $* ] returned $ret"
+        echo "One more attempt for [ $* ] after delay"
 
         sleep 5
 
         "$@"
-	    ret=$?
-	    if [[ $ret -eq 0 ]]
-	    then
-	        echo "Successfully ran [ $@ ]"
-	    else
-	    	echo "Error: Command [ $@ ] returned $ret - Exiting"
-        	exit $ret
+        ret=$?
+        if [[ $ret -eq 0 ]]
+        then
+            echo "Successfully ran [ $* ]"
+        else
+            echo "Error: Command [ $* ] returned $ret - Exiting"
+            exit $ret
         fi
     fi
 }
@@ -58,20 +62,20 @@ if [ $is_ansible_right -ne 0 ]; then
     fi
     if IS_XENIAL; then
         do_cmd sudo apt-get -y install wget python3 python3-yaml python3-httplib2 python3-setuptools python3-markupsafe python3-jinja2 python3-paramiko sshpass
-        do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5.0-1ppa~trusty_all.deb
+        do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5-1ppa_xenial_all.deb
     fi
     if IS_BIONIC; then
         do_cmd sudo apt-get -y install wget python3 python3-yaml python3-httplib2 python3-setuptools python3-markupsafe python3-jinja2 python3-paramiko sshpass
-        do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5.0-1ppa~trusty_all.deb
+        do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5-1ppa_bionic_all.deb
     fi
-	do_cmd sudo dpkg -i /tmp/ansible.deb
+    do_cmd sudo dpkg -i /tmp/ansible.deb
     do_cmd sudo rm /tmp/ansible.deb
 fi
 
 download_playbook
 
 if IS_TRUSTY; then
-    sudo ansible-playbook -v ${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml
+    sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml"
 else
-    sudo ansible-playbook -v ${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml -e 'ansible_python_interpreter=/usr/bin/python3'
+    sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml -e 'ansible_python_interpreter=/usr/bin/python3'"
 fi
