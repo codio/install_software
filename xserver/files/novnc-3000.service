@@ -2,7 +2,7 @@
 User = codio
 Group = codio
 ExecStartPre = cp /opt/novnc/noVNC-master/vnc_lite.html /opt/novnc/noVNC-master/index.html
-ExecStart = websockify --heartbeat 20 --web /opt/novnc/noVNC-master 3000 localhost:5900
+ExecStart = /usr/local/bin/websockify --heartbeat 20 --web /opt/novnc/noVNC-master 3000 localhost:5900
 Restart=always
 RestartSec=5s
 
