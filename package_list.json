@@ -37,6 +37,13 @@
         "version": "8",
         "category": "programming_languages"
       },
+      "openjdk11": {
+        "name": "Java 11 (OpenJDK zulu)",
+        "description": "Java is a general purpose, high-level programming language.",
+        "script": "openjdk-zulu-11/install.sh",
+        "version": "11",
+        "category": "programming_languages"
+      },
       "nodejs": {
         "name": "NodeJS",
         "description": "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.",
