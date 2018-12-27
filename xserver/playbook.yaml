@@ -28,13 +28,13 @@
       when: ansible_distribution_version == "14.04"
 
     - name: Systemd for openbox
-      copy: src=openbox.service dest=/etc/systemd/system/openbox.conf
+      copy: src=openbox.service dest=/etc/systemd/system/openbox.service
       when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
     - name: Systemd for x11vnc
-      copy: src=x11vnc.service dest=/etc/systemd/system/x11vnc.conf
+      copy: src=x11vnc.service dest=/etc/systemd/system/x11vnc.service
       when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
     - name: Systemd for novnc-3000
-      copy: src=novnc-3000.service dest=/etc/systemd/system/novnc-3000.conf
+      copy: src=novnc-3000.service dest=/etc/systemd/system/novnc-3000.service
       when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
 
     - file: path=/etc/init/novnc.conf state=absent
