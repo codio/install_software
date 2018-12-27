@@ -3,6 +3,6 @@
   sudo: True
   tasks:
     - name: Override mongo defaults on ubuntu 14.04
-        copy: src=mongo.conf dest=/etc/init/mongodb.override
-        when: ansible_distribution_version == "14.04"
+      copy: src=mongo.conf dest=/etc/init/mongodb.override
+      when: ansible_distribution_version == "14.04"
     - apt: name=mongodb state=present
