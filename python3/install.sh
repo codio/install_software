@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bash -c "$(curl -fsSL https://raw.github.com/codio/install_software/master/tools/ansible.sh)" python3
+bash -c "$(curl -fsSL https://raw.github.com/codio/install_software/9995_updates/tools/ansible.sh)" python3

@@ -17,9 +17,26 @@
       file: path=/opt/novnc state=directory
     - name: Download novnc
       shell: curl -fsSL https://github.com/novnc/noVNC/archive/v1.0.0.tar.gz | tar zxf - -C /opt/novnc && rm -rf /opt/novnc/noVNC-master ; mv /opt/novnc/noVNC-1.0.0 /opt/novnc/noVNC-master
-    - copy: src=openbox.conf dest=/etc/init/openbox.conf
-    - copy: src=x11vnc.conf dest=/etc/init/x11vnc.conf
-    - copy: src=novnc-3000.conf dest=/etc/init/novnc-3000.conf
+    - name: Upstart for openbox
+        copy: src=openbox.conf dest=/etc/init/openbox.conf
+        when: ansible_distribution_version == "14.04"
+    - name: Upstart for x11vnc
+        copy: src=x11vnc.conf dest=/etc/init/x11vnc.conf
+        when: ansible_distribution_version == "14.04"
+    - name: Upstart for novnc-3000
+        copy: src=novnc-3000.conf dest=/etc/init/novnc-3000.conf
+        when: ansible_distribution_version == "14.04"
+
+    - name: Systemd for openbox
+        copy: src=openbox.service dest=/etc/systemd/system/openbox.conf
+        when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
+    - name: Systemd for x11vnc
+        copy: src=x11vnc.service dest=/etc/systemd/system/x11vnc.conf
+        when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
+    - name: Systemd for novnc-3000
+        copy: src=novnc-3000.service dest=/etc/systemd/system/novnc-3000.conf
+        when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
+
     - file: path=/etc/init/novnc.conf state=absent
     - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
     - copy: src=rc.xml dest=/etc/xdg/openbox/rc.xml

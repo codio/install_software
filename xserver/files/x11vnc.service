@@ -1,0 +1,13 @@
+[Service]
+User = codio
+Group = codio
+ExecStart = x11vnc -auth /tmp/codio.auth -display :0 -listen localhost -noncache -shared -forever
+Restart=always
+RestartSec=5s
+
+[Unit]
+Description = X11VNC
+After = openbox.service
+
+[Install]
+WantedBy = multi-user.target
