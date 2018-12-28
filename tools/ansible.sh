@@ -3,9 +3,9 @@
 COOKBOOK_PATH=/tmp/codio_playbook
 BRANCH=9995_updates
 
-TRUSTY=$(lsb_release -a  2> /dev/null | grep -q trusty)
-XENIAL=$(lsb_release -a  2> /dev/null | grep -q xenial)
-BIONIC=$(lsb_release -a  2> /dev/null | grep -q bionic)
+TRUSTY=$(lsb_release -c -s | grep -q trusty)
+XENIAL=$(lsb_release -c -s | grep -q xenial)
+BIONIC=$(lsb_release -c -s | grep -q bionic)
 
 IS_TRUSTY() { [ -n "${TRUSTY}" ]; }
 IS_XENIAL() { [ -n "${XENIAL}" ]; }
