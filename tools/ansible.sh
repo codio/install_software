@@ -3,9 +3,9 @@
 COOKBOOK_PATH=/tmp/codio_playbook
 BRANCH=9995_updates
 
-TRUSTY=$(lsb_release -a  2> /dev/null | grep trusty)
-XENIAL=$(lsb_release -a  2> /dev/null | grep xenial)
-BIONIC=$(lsb_release -a  2> /dev/null | grep bionic)
+TRUSTY=$(lsb_release -a  2> /dev/null | grep -q trusty)
+XENIAL=$(lsb_release -a  2> /dev/null | grep -q xenial)
+BIONIC=$(lsb_release -a  2> /dev/null | grep -q bionic)
 
 IS_TRUSTY() { [ -n "${TRUSTY}" ]; }
 IS_XENIAL() { [ -n "${XENIAL}" ]; }
@@ -45,13 +45,13 @@ download_playbook()
 }
 
 if IS_TRUSTY; then
-    ansible --version | grep '2.2.0.0' 2> /dev/null
+    ansible --version | grep -q '2.2.0.0' 2> /dev/null
 fi
 if IS_XENIAL; then
-    ansible --version | grep '2.7.5' 2> /dev/null
+    ansible --version | grep -q '2.7.5' 2> /dev/null
 fi
 if IS_BIONIC; then
-    ansible --version | grep '2.7.5' 2> /dev/null
+    ansible --version | grep -q '2.7.5' 2> /dev/null
 fi
 is_ansible_right=$?
 if [ $is_ansible_right -ne 0 ]; then

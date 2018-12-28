@@ -30,13 +30,13 @@
 
     - name: Systemd for openbox
       copy: src=openbox.service dest=/etc/systemd/system/openbox.service
-      when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
+      when: ansible_distribution_version >= "16.04"
     - name: Systemd for x11vnc
       copy: src=x11vnc.service dest=/etc/systemd/system/x11vnc.service
-      when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
+      when: ansible_distribution_version >= "16.04"
     - name: Systemd for novnc-3000
       copy: src=novnc-3000.service dest=/etc/systemd/system/novnc-3000.service
-      when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
+      when: ansible_distribution_version >= "16.04"
 
     - file: path=/etc/init/novnc.conf state=absent
     - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
@@ -56,18 +56,18 @@
         state: restarted
         daemon_reload: yes
         name: openbox
-      when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
+      when: ansible_distribution_version >= "16.04"
     - name: x11vnc restarted
       systemd:
         enabled: yes
         state: restarted
         daemon_reload: yes
         name: x11vnc
-      when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
+      when: ansible_distribution_version >= "16.04"
     - name: novnc-3000 restarted
       systemd:
         enabled: yes
         state: restarted
         daemon_reload: yes
         name: novnc-3000
-      when: ansible_distribution_version == "16.04" or ansible_distribution_version == "18.04"
+      when: ansible_distribution_version >= "16.04"
