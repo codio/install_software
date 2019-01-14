@@ -44,14 +44,16 @@ download_playbook()
 
 if IS_TRUSTY; then
     ansible --version | grep -q '2.2.0.0' 2> /dev/null
+    is_ansible_right=$?
 fi
 if IS_XENIAL; then
     ansible --version | grep -q '2.7.5' 2> /dev/null
+    is_ansible_right=$?
 fi
 if IS_BIONIC; then
     ansible --version | grep -q '2.7.5' 2> /dev/null
+    is_ansible_right=$?
 fi
-is_ansible_right=$?
 if [ $is_ansible_right -ne 0 ]; then
     do_cmd sudo apt-get update
     if IS_TRUSTY; then
