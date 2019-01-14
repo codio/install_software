@@ -61,7 +61,7 @@ if [ $is_ansible_right -ne 0 ]; then
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.2.0.0-1ppa~trusty_all.deb
     fi
     if IS_XENIAL; then
-        do_cmd sudo apt-get -y install wget python python-crypto python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko sshpass
+        do_cmd sudo apt-get -y install wget python python-cryptography python-crypto python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko python-cryptography sshpass
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5-1ppa_xenial_all.deb
     fi
     if IS_BIONIC; then
