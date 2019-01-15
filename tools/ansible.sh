@@ -74,6 +74,8 @@ fi
 
 download_playbook
 
+do_cmd sudo apt-get update
+
 if IS_TRUSTY; then
     sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml"
 else
