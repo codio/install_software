@@ -1,7 +1,7 @@
 #!/bin/bash
 
 COOKBOOK_PATH=/tmp/codio_playbook
-BRANCH=9995_updates
+BRANCH=master
 
 CODENAME=$(lsb_release -c -s)
 
