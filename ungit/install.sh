@@ -4,4 +4,4 @@ bash -c "$(curl -fsSL https://raw.github.com/codio/install_software/master/tools
 
 echo
 echo "Add the line to you preview configuration to access ungit from the Menu"
-echo '   "ungit": "https://{{domain8000}}/"'
+echo '   "ungit": "https://{{domain8000}}/#/repository?path=%2Fhome%2Fcodio%2Fworkspace"'
