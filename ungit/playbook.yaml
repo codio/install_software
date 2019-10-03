@@ -1,0 +1,41 @@
+---
+- hosts: 127.0.0.1
+  sudo: true
+  tasks:
+    - apt: name=ca-certificates state=latest
+    - apt: name=apt-transport-https state=present
+    - name: Add apt key for nodesource
+      become: yes
+      shell: curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+    - name: Add repo for nodesource
+      apt_repository:
+        repo: 'deb https://deb.nodesource.com/node_10.x {{ ansible_distribution_release }} main' 
+        update_cache: yes
+    - name: Install nodejs
+      apt: name=nodejs state=latest
+    - shell: npm i -g ungit
+    - copy:
+        content: |
+          {
+              "port": 8000,
+              "bugtracking": false,
+              "ungitBindIp": "0.0.0.0"
+          }
+        dest: /home/codio/.ungitrc
+    - copy:
+        content: |
+            [Service]
+            User = codio
+            Group = codio
+            ExecStart = /usr/bin/ungit
+            Restart=always
+            RestartSec=5s
+            WorkingDirectory=/home/codio/workspace
+
+            [Unit]
+            Description = Ungit
+
+            [Install]
+            WantedBy = multi-user.target
+        dest: /etc/systemd/system/ungit.service
+    - shell: systemctl enable --now ungit
