@@ -13,7 +13,10 @@
         update_cache: yes
     - name: Install nodejs
       apt: name=nodejs state=latest
-    - shell: npm i -g ungit
+    - name: Install "ungit"
+      npm:
+        name: ungit
+        global: yes
     - copy:
         content: |
           {
@@ -38,4 +41,8 @@
             [Install]
             WantedBy = multi-user.target
         dest: /etc/systemd/system/ungit.service
-    - shell: systemctl enable --now ungit
+    - name: Make sure a service is running
+      systemd:
+        state: started
+        enabled: yes
+        name: ungit
