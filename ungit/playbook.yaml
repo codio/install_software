@@ -46,3 +46,17 @@
         state: started
         enabled: yes
         name: ungit
+    - name: Recursively fix ownership of a directory
+      file:
+        path: /home/codio/.npm
+        state: directory
+        recurse: yes
+        owner: codio
+        group: codio
+    - name: Recursively fix ownership of a directory
+      file:
+        path: /home/codio/.config
+        state: directory
+        recurse: yes
+        owner: codio
+        group: codio
