@@ -99,6 +99,13 @@
         "script": "ocaml-lsp/install.sh",
         "version": "0.3.0",
         "category": "utilities"
+      },
+      "ungit": {
+        "name": "Ungit",
+        "description": "The easiest way to use git.",
+        "script": "ungit/install.sh",
+        "version": "1.0.0",
+        "category": "utilities"
       }
    }
 }
