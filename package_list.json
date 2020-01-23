@@ -106,6 +106,13 @@
         "script": "ungit/install.sh",
         "version": "1.0.0",
         "category": "utilities"
+      },
+      "autostart": {
+        "name": "Autostart Support",
+        "description": "Script autostart for ~/startup.sh, workspace startup.sh and .guides/startup.sh as BASH files",
+        "script": "autostart/install.sh",
+        "version": "1.0.0",
+        "category": "utilities"
       }
    }
 }
