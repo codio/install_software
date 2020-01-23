@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+
+cd /home/codio/workspace
+
+if [ -f /home/codio/startup.sh ]; then
+    su codio -l -c "/bin/bash /home/codio/startup.sh" &
+fi
+
+if [ -f /home/codio/workspace/.guides/startup.sh ]; then
+    su codio -l -c "/bin/bash /home/codio/workspace/.guides/startup.sh" &
+fi
+
+if [ -f /home/codio/workspace/startup.sh ]; then
+    su codio -l -c "/bin/bash /home/codio/workspace/startup.sh" &
+fi

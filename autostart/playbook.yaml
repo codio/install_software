@@ -1,0 +1,5 @@
+---
+- hosts: 127.0.0.1
+  sudo: true
+  tasks:
+    - copy: src=rc.local dest=/etc/rc.local mode=0755
