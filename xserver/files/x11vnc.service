@@ -1,7 +1,7 @@
 [Service]
 User = codio
 Group = codio
-ExecStart = /usr/bin/x11vnc -auth /tmp/codio.auth -display :0 -listen localhost -noncache -shared -forever
+ExecStart = /usr/bin/x11vnc -noxrecord -auth /tmp/codio.auth -display :0 -listen localhost -noncache -shared -forever
 Restart=always
 RestartSec=5s
 
