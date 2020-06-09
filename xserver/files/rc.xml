@@ -748,6 +748,12 @@
 
   # end of the example
 -->
+  <application class="*">
+    <position force="yes">
+      <x>0</x>
+      <y>0</y>
+    </position>
+  </application>
 </applications>
 
 </openbox_config>
