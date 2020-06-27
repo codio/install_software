@@ -76,7 +76,7 @@
         "name": "MySQL",
         "description": "MySQL is an open-source relational database management system (RDBMS)",
         "script": "mysql/install.sh",
-        "version": "5.5.49",
+        "version": "5.7.30",
         "category": "data_stores"
       },
       "python-lsp": {
@@ -114,12 +114,20 @@
         "version": "1.0.0",
         "category": "utilities"
       },
-      "autostart": {
+      "omnidb": {
         "name": "OmniDB",
         "description": "browser-based tool that simplifies database management, starts on 5000 port",
         "script": "omnidb/install.sh",
         "version": "2.17.0",
         "category": "utilities"
+      },
+      "mariadb": {
+        "name": "MariaDB",
+        "description": "MariaDB is an open-source relational database management system (RDBMS)",
+        "script": "mariadb/install.sh",
+        "version": "10.1.0",
+        "category": "data_stores"
       }
+
    }
 }

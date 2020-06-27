@@ -1,0 +1,44 @@
+---
+- name: Install MariaDB
+  hosts: 127.0.0.1
+  become: True
+  become_user: root
+  tasks:
+    - name: Install MariaDB
+      apt:
+        pkg:
+        - mariadb-server
+        - mariadb-client
+        - python-mysqldb
+        - python3-mysqldb
+
+    - name: Count files in /var/lib/mysql
+      find: path=/var/lib/mysql patterns='*'
+      register: db_files
+
+    - name: Set root user password
+      mysql_user:
+        login_user: root
+        login_password: codio
+        user: root
+        check_implicit_admin: true
+        password: codio
+
+    - name: Set codio user password
+      mysql_user:
+        name: codio
+        password: codio
+        login_user: root
+        login_password: codio
+        priv: '*.*:ALL'
+
+    - name: update root user
+      shell: mysql -e "update mysql.user set plugin='' where user='root';"
+
+    - name: restart MariaDB
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: mariadb.service
+
+    - copy: src=my.cnf dest=/home/codio/.my.cnf
