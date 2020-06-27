@@ -1,0 +1,64 @@
+---
+- hosts: 127.0.0.1
+  become: yes
+  become_user: root
+  tasks:
+    - name: Install dependencies
+      apt:
+        pkg:
+          - libnss3
+          - haproxy
+
+    - name: Install OmniDB
+      apt:
+        deb: https://omnidb.org/dist/2.17.0/omnidb-server_2.17.0-debian-amd64.deb
+
+    - name: OmniDB config service
+      copy:
+        src: omnidb.conf
+        dest: /etc/omnidb.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: OmniDB systemd service fixed
+      copy:
+        src: omnidb.service
+        dest: /etc/systemd/system/omnidb.service
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: haproxy config
+      copy:
+        src: haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Create a haproxy override directory
+      file:
+        path: /etc/systemd/system/haproxy.service.d/
+        state: directory
+        mode: '0755'
+
+    - name: haproxy override to wait for omnidb
+      copy:
+        src: override.conf
+        dest: /etc/systemd/system/haproxy.service.d/override.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: restart omniDB
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: omnidb.service
+
+    - name: restart haproxy
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: haproxy.service
