@@ -1,0 +1,11 @@
+[Unit]
+Description=OmniDB server daemon
+After=network.target
+
+[Service]
+ExecStart=/opt/omnidb-server/omnidb-server -c /etc/omnidb.conf -e 443
+User=codio
+Group=codio
+
+[Install]
+WantedBy=multi-user.target
