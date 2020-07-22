@@ -11,7 +11,7 @@
 
     - name: Install OmniDB
       apt:
-        deb: https://omnidb.org/dist/2.17.0/omnidb-server_2.17.0-debian-amd64.deb
+        deb: https://github.com/MaximKraev/OmniDB/releases/download/2.17.0-1/omnidb-server_2.17.0-debian-amd64.deb
 
     - name: OmniDB config service
       copy:
