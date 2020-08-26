@@ -97,7 +97,7 @@
         "name": "Language Server for OCaml",
         "description": "A language server for OCaml and related languages.",
         "script": "ocaml-lsp/install.sh",
-        "version": "0.3.0",
+        "version": "1.12.0",
         "category": "utilities"
       },
       "ungit": {
