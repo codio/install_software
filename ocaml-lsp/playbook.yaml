@@ -60,7 +60,7 @@
           /usr/bin/node /usr/share/ocaml-language-server/bin/server $@ > /tmp/lsp.log 2>&1
         owner: root
         group: root
-        mode: 1755
+        mode: '0755'
 
     - file:
         path: /usr/share/ocaml-language-server
