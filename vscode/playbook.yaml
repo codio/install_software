@@ -17,5 +17,6 @@
     - name: Enable and start vscode
       systemd:
         name: code-server@codio
+        daemon_reload: yes
         state: started
         enabled: yes
