@@ -127,6 +127,13 @@
         "script": "mariadb/install.sh",
         "version": "10.1.0",
         "category": "data_stores"
+      },
+      "vscode": {
+        "name": "VSCode",
+        "description": "Visual Studio Code is a free source-code editor made by Microsoft. Runs on 4000 port. 1G box or more is recommended.",
+        "script": "vscode/install.sh",
+        "version": "3.5.0",
+        "category": "utilities"
       }
 
    }
