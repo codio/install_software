@@ -130,7 +130,7 @@
       },
       "vscode": {
         "name": "VSCode",
-        "description": "Visual Studio Code is a free source-code editor made by Microsoft",
+        "description": "Visual Studio Code is a free source-code editor made by Microsoft. Runs on 4000 port.",
         "script": "vscode/install.sh",
         "version": "3.5.0",
         "category": "utilities"
