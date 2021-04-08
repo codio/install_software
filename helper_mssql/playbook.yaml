@@ -11,4 +11,9 @@
       pip:
         name: pyodbc
 
+    - name: Creates directory
+      file:
+        path: /home/codio/workspace/.guides/scripts
+        state: directory
+
     - copy: src=helper_mssql.py dest=/home/codio/workspace/.guides/scripts/helper_mssql.py mode=a+wx

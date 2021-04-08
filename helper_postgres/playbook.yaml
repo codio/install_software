@@ -18,4 +18,9 @@
       pip:
         name: psycopg2
 
+    - name: Creates directory
+      file:
+        path: /home/codio/workspace/.guides/scripts
+        state: directory
+
     - copy: src=helper_postgres.py dest=/home/codio/workspace/.guides/scripts/helper_postgres.py mode=a+wx
