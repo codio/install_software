@@ -28,4 +28,4 @@
         dest: /home/codio/workspace
         update: yes
         force: yes
-        version: master
+        version: 12466_localhost
