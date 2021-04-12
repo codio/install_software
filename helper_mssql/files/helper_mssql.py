@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 import argparse
 import sys
@@ -21,7 +21,7 @@ def create_connection(db_host, db_user, db_password, db_name):
       'DRIVER={ODBC Driver 17 for SQL Server};SERVER='+ db_host +';DATABASE='+ db_name +';UID='+ db_user +';PWD='+ db_password
     )
   except OperationalError as e:
-    print(f"Create connection error '{e}' occured")
+    print('Create connection error {} occured'.format(e))
     exit(1)
   
   return connection
@@ -34,14 +34,14 @@ def execute_query(connection, query):
     headers = [i[0] for i in cursor.description]
     return [headers, result]
   except Error as e:
-    print(f"Query error '{e}' occured")
+    print('Query error {} occured'.format(e))
     exit(1)
     
 
 def main():
   args = parse_args()
   
-  query = input()
+  query = raw_input()
   
   connection = create_connection(
     args.db_host,

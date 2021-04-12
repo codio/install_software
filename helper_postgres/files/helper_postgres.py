@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 # sudo apt install libpq-dev
-# pip3 install psycopg2
+# pip install psycopg2
 
 import argparse
 import sys
@@ -31,7 +31,7 @@ def create_connection(db_name, db_user, db_password, db_host, db_port):
       port=db_port
     )
   except OperationalError as e:
-    print(f"Create connection error '{e}' occured")
+    print('Create connection error {} occured'.format(e))
     exit(1)
   
   return connection
@@ -44,13 +44,13 @@ def execute_query(connection, query):
     headers = [i[0] for i in cursor.description]
     return [headers, result]
   except OperationalError as e:
-    print(f"Query error '{e}' occured")
+    print('Query error {} occured'.format(e))
     exit(1)
     
 def main():
   args = parse_args()
   
-  query = input()
+  query = raw_input()
   
   connection = create_connection(
     args.db_name,
