@@ -1,7 +1,7 @@
 #!/bin/bash
 
 COOKBOOK_PATH=/tmp/codio_playbook
-BRANCH=master
+BRANCH=12410_sql_helper
 
 CODENAME=$(lsb_release -c -s)
 
