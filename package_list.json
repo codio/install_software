@@ -134,6 +134,27 @@
         "script": "vscode/install.sh",
         "version": "3.5.0",
         "category": "utilities"
+      },
+      "helper_mssql": {
+        "name": "Helper MSSql",
+        "description": "MSSql codio helper",
+        "script": "helper_mssql/install.sh",
+        "version": "1.0.0",
+        "category": "utilities"
+      },
+      "helper_mysql": {
+        "name": "Helper MySql",
+        "description": "MySql codio helper",
+        "script": "helper_mysql/install.sh",
+        "version": "1.0.0",
+        "category": "utilities"
+      },
+      "helper_postgres": {
+        "name": "Helper PostgreSQL",
+        "description": "PostgreSQL codio helper",
+        "script": "helper_postgres/install.sh",
+        "version": "1.0.0",
+        "category": "utilities"
       }
 
    }
