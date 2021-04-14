@@ -17,3 +17,4 @@
         state: directory
 
     - copy: src=helper_mysql.py dest=/home/codio/workspace/.guides/scripts/helper_mysql.py mode=a+wx
+      become_user: codio

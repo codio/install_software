@@ -24,3 +24,4 @@
         state: directory
 
     - copy: src=helper_postgres.py dest=/home/codio/workspace/.guides/scripts/helper_postgres.py mode=a+wx
+      become_user: codio
