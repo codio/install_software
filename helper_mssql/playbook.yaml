@@ -5,6 +5,8 @@
     - apt: name=python state=present
     - apt: name=python-dev state=present
     - apt: name=python-pip state=present
+    - apt: name=unixodbc state=present
+    - apt: name=unixodbc-dev state=present
 
     - name: Install pyodbc
       become_user: codio
