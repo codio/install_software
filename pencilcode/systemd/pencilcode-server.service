@@ -1,0 +1,14 @@
+[Service]
+WorkingDirectory = /home/codio/pencilcode/
+User = codio
+Group = codio
+TimeoutStopSec = 10
+ExecStart = /home/codio/pencilcode/pencilcode-server.sh
+Restart = always
+
+[Unit]
+Description = codio pencilcode
+After = network.target
+
+[Install]
+WantedBy = multi-user.target

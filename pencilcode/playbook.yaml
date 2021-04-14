@@ -5,27 +5,30 @@
     - name: Add nodesource repository
       shell: curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
-    - name: Add APT key
-      apt_key:
-        url: https://dl.yarnpkg.com/debian/pubkey.gpg
-        state: present
-
-    - name: Add APT repository
-      apt_repository:
-        repo: deb https://dl.yarnpkg.com/debian/ stable main
-        state: present
-
     - apt: update_cache=yes
     - apt: name=nodejs state=present
     - apt: name=build-essential state=present
-    - apt: name=yarn state=present
 
     - name: PencilCode checkout
       become: yes
       become_user: codio
       git:
         repo: 'https://github.com/codio/pencilcode.git'
-        dest: /home/codio/workspace
+        dest: /home/codio/pencilcode
         update: yes
         force: yes
         version: 12466_localhost
+
+    - copy: src=scripts/pencilcode-build.sh dest=/home/codio/pencilcode/pencilcode-build.sh mode=0777
+
+
+    - name: Pencilcode build
+      become: codio
+      shell: sh pencilcode-build.sh
+      args:
+        chdir: /home/codio/pencilcode
+
+    - copy: src=scripts/pencilcode-server.sh dest=/home/codio/pencilcode/pencilcode-server.sh mode=0777
+    - copy: src=systemd/pencilcode-server.service dest=/etc/systemd/system/pencilcode-server.service
+
+    - service: name=pencilcode-server state=restarted enable=true
