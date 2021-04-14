@@ -1,0 +1,21 @@
+---
+- hosts: 127.0.0.1
+  become: true
+  tasks:
+    - apt: name=python state=present
+    - apt: name=python-dev state=present
+    - apt: name=python-pip state=present
+
+    - name: Install mysql-connector-python
+      become_user: codio
+      pip:
+        name: mysql-connector-python
+
+    - name: Creates directory
+      become_user: codio
+      file:
+        path: /home/codio/workspace/.guides/scripts
+        state: directory
+
+    - copy: src=helper_mysql.py dest=/home/codio/workspace/.guides/scripts/helper_mysql.py mode=a+wx
+      become_user: codio
