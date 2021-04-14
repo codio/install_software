@@ -12,6 +12,7 @@
         name: pyodbc
 
     - name: Creates directory
+      become_user: codio
       file:
         path: /home/codio/workspace/.guides/scripts
         state: directory
