@@ -20,7 +20,7 @@ def create_connection(db_host, db_user, db_password, db_name):
     connection = pyodbc.connect(
       'DRIVER={ODBC Driver 17 for SQL Server};SERVER='+ db_host +';DATABASE='+ db_name +';UID='+ db_user +';PWD='+ db_password
     )
-  except OperationalError as e:
+  except pyodbc.Error as e:
     print('Create connection error {} occured'.format(e))
     exit(1)
   
@@ -33,7 +33,7 @@ def execute_query(connection, query):
     result = cursor.fetchall()
     headers = [i[0] for i in cursor.description]
     return [headers, result]
-  except Error as e:
+  except pyodbc.Error as e:
     print('Query error {} occured'.format(e))
     exit(1)
     
