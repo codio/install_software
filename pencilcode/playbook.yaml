@@ -19,6 +19,8 @@
         force: yes
         version: 12466_localhost
 
+    - copy: src=conf.json dest=/home/codio/pencilcode/server/config/development.json
+      become_user: codio
     - copy: src=scripts/pencilcode-build.sh dest=/home/codio/pencilcode/pencilcode-build.sh mode=0777
       become_user: codio
 
