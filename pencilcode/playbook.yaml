@@ -28,9 +28,6 @@
       args:
         chdir: /home/codio/pencilcode
 
-    - copy: src=scripts/pencilcode-server.sh dest=/home/codio/pencilcode/pencilcode-server.sh mode=0777
-      become_user: codio
-
     - copy: src=systemd/pencilcode-server.service dest=/etc/systemd/system/pencilcode-server.service
 
     - service: name=pencilcode-server state=restarted enabled=true

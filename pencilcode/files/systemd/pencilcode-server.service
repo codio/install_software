@@ -3,7 +3,7 @@ WorkingDirectory = /home/codio/pencilcode/
 User = codio
 Group = codio
 TimeoutStopSec = 10
-ExecStart = /home/codio/pencilcode/pencilcode-server.sh
+ExecStart = /usr/bin/npm run serve
 Restart = always
 
 [Unit]
