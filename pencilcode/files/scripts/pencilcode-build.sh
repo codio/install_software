@@ -2,5 +2,5 @@
 
 cd /home/codio/pencilcode
 
-npm i
+npm i --force
 npm run build
