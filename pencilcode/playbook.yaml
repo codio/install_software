@@ -24,6 +24,13 @@
     - copy: src=scripts/pencilcode-build.sh dest=/home/codio/pencilcode/pencilcode-build.sh mode=0777
       become_user: codio
 
+    - name: pencilcode - npm install
+      become: yes
+      become_user: codio
+      shell: npm i
+      args:
+        chdir: /home/codio/pencilcode
+
     - name: Pencilcode build
       become_user: codio
       shell: sh pencilcode-build.sh

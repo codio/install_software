@@ -2,5 +2,4 @@
 
 cd /home/codio/pencilcode
 
-npm i --force
-npm run build
+npm --max_old_space_size=1024 run build
