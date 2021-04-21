@@ -158,7 +158,7 @@
       },
       "pencilcode": {
         "name": "PencilCode",
-        "description": "Pencilcode server on Codio",
+        "description": "Pencilcode server on Codio. Runs on 8008 port.",
         "script": "pencilcode/install.sh",
         "version": "1.0.0",
         "category": "utilities"
