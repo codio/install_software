@@ -17,7 +17,7 @@
         dest: /home/codio/pencilcode
         update: yes
         force: yes
-        version: 12466_localhost
+        version: master
 
     - copy: src=conf.json dest=/home/codio/pencilcode/server/config/development.json
       become_user: codio

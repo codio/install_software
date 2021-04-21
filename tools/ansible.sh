@@ -1,7 +1,7 @@
 #!/bin/bash
 
 COOKBOOK_PATH=/tmp/codio_playbook
-BRANCH=12466_pencilcode
+BRANCH=master
 
 CODENAME=$(lsb_release -c -s)
 
