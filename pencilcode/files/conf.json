@@ -1,0 +1,10 @@
+{
+  "dirs": {
+    "staticdir": "../content",
+    "datadir": "/home/codio/workspace",
+    "cachedir": "../local/cache"
+  },
+  "host": "localhost",
+  "useProxy": 1,
+  "useHttps": false
+}
