@@ -4,11 +4,12 @@ COOKBOOK_PATH=/tmp/codio_playbook
 BRANCH=13175_x_server
 
 CODENAME=$(lsb_release -c -s)
+PY_FLAG=$1
 
 IS_TRUSTY() { [ "${CODENAME}" == "trusty" ]; }
 IS_XENIAL() { [ "${CODENAME}" == "xenial" ]; }
 IS_BIONIC() { [ "${CODENAME}" == "bionic" ]; }
-USE_PYTHON3() { [ "$1" == "python3" ] }
+USE_PYTHON3() { [ "${PY_FLAG}" == "python3" ]; }
 
 do_cmd()
 {
@@ -82,7 +83,7 @@ do_cmd sudo apt-get update
 
 if USE_PYTHON3; then
   sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml" -e 'ansible_python_interpreter=/usr/bin/python3'
-else if IS_TRUSTY; then
+elif IS_TRUSTY; then
     sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml"
 else
     sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml" -e 'ansible_python_interpreter=/usr/bin/python2'
