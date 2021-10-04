@@ -11,7 +11,7 @@
     - apt: name=python3-pip state=present
     - apt: name=python3.4-venv state=present
       when: ansible_distribution_major_version|int == 14 and ansible_os_family == "Debian"
-    - apt: name=python-virtualenv state=present
+    - apt: name=python3-venv state=present
       when: ansible_distribution_major_version|int > 14 and ansible_os_family == "Debian"
     - apt: name=python3-numpy state=present
       when: ansible_distribution_major_version|int > 14 and ansible_os_family == "Debian"
