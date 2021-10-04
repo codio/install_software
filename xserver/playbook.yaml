@@ -12,9 +12,8 @@
     - apt: name=python3-venv state=present
     - apt: name=python3-numpy state=present
     - name: Create virtualenv
-      pip:
-        virtualenv: /opt/websockify-env
-        virtualenv_command: /usr/bin/python3 -m venv
+      command:
+        cmd: /usr/bin/python3 -m venv /opt/websockify-env
     - name: Install websockify
       pip:
         name: websockify
