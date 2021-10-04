@@ -2,7 +2,7 @@
 User = root
 Group = root
 ExecStartPre = /bin/cp /opt/novnc/noVNC-master/vnc_lite.html /opt/novnc/noVNC-master/index.html
-ExecStart = /opt/websockify-env/websockify --heartbeat 20 --web /opt/novnc/noVNC-master 3000 localhost:5900
+ExecStart = /opt/websockify-env/bin/websockify --heartbeat 20 --web /opt/novnc/noVNC-master 3000 localhost:5900
 Restart=always
 RestartSec=5s
 
