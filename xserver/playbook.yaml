@@ -12,12 +12,12 @@
     - apt: name=python3-numpy state=present
     - name: Create virtualenv
       command:
-        cmd: virtualenv /tmp/websockify-env
+        cmd: virtualenv /opt/websockify-env
     - name: Install websockify
       pip:
         name: websockify
         state: present
-        virtualenv: /tmp/websockify-env
+        virtualenv: /opt/websockify-env
         virtualenv_python: python3
     - apt: name=xterm state=absent
     - stat: path=/opt/novnc/noVNC-master
