@@ -9,7 +9,10 @@
     - apt: name=python-virtualenv state=present
     - apt: name=python3-dev state=present
     - apt: name=python3-pip state=present
-    - apt: name=python3-venv state=present
+    - apt: name=python3.4-virtualenv state=present
+      when: ansible_distribution_major_version == "14" and ansible_os_family == "Ubuntu"
+    - apt: name=python-virtualenv state=present
+      when: ansible_distribution_major_version != "14" and ansible_os_family == "Ubuntu"
     - apt: name=python3-numpy state=present
     - name: Create virtualenv
       command:
