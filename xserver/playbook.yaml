@@ -14,9 +14,18 @@
     - apt: name=python-virtualenv state=present
       when: ansible_distribution_major_version|int > 14 and ansible_os_family == "Debian"
     - apt: name=python3-numpy state=present
+      when: ansible_distribution_major_version|int > 14 and ansible_os_family == "Debian"
     - name: Create virtualenv
       command:
         cmd: /usr/bin/python3 -m venv /opt/websockify-env
+    - name: Install numpy
+      pip:
+        name: numpy
+        version: 1.16.6
+        state: present
+        virtualenv: /opt/websockify-env
+        virtualenv_python: python3
+      when: ansible_distribution_major_version|int == 14 and ansible_os_family == "Debian"
     - name: Install websockify
       pip:
         name: websockify
