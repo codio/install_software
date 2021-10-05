@@ -1,7 +1,7 @@
 #!/bin/bash
 
 COOKBOOK_PATH=/tmp/codio_playbook
-BRANCH=13175_x_server
+BRANCH=master
 
 CODENAME=$(lsb_release -c -s)
 PY_FLAG=$1
