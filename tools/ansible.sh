@@ -4,10 +4,12 @@ COOKBOOK_PATH=/tmp/codio_playbook
 BRANCH=master
 
 CODENAME=$(lsb_release -c -s)
+PY_FLAG=$1
 
 IS_TRUSTY() { [ "${CODENAME}" == "trusty" ]; }
 IS_XENIAL() { [ "${CODENAME}" == "xenial" ]; }
 IS_BIONIC() { [ "${CODENAME}" == "bionic" ]; }
+USE_PYTHON3() { [ "${PY_FLAG}" == "python3" ]; }
 
 do_cmd()
 {
@@ -56,6 +58,9 @@ if IS_BIONIC; then
 fi
 if [ $is_ansible_right -ne 0 ]; then
     do_cmd sudo apt-get update
+    if USE_PYTHON3; then
+      do_cmd sudo apt-get -y install python3
+    fi
     if IS_TRUSTY; then
         do_cmd sudo apt-get -y install wget python python-support python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko sshpass
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.2.0.0-1ppa~trusty_all.deb
@@ -76,7 +81,9 @@ download_playbook
 
 do_cmd sudo apt-get update
 
-if IS_TRUSTY; then
+if USE_PYTHON3; then
+  sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml" -e 'ansible_python_interpreter=/usr/bin/python3'
+elif IS_TRUSTY; then
     sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml"
 else
     sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml" -e 'ansible_python_interpreter=/usr/bin/python2'
