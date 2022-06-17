@@ -57,7 +57,7 @@ if IS_BIONIC; then
     ansible --version | grep -q '2.7.5' 2> /dev/null
     is_ansible_right=$?
 fi
-if IS_BIONIC; then
+if IS_JAMMY; then
     ansible --version | grep -q '2.10' 2> /dev/null
     is_ansible_right=$?
 fi
