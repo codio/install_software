@@ -1,12 +1,13 @@
 ---
 - hosts: 127.0.0.1
-  sudo: true
+  become: yes
+  become_user: root
   tasks:
     - apt: name=ca-certificates state=latest
     - apt: name=apt-transport-https state=present
     - name: add repo
       become: yes
-      shell: curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+      shell: curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 
     - name: Install nodejs
       apt: name=nodejs state=latest

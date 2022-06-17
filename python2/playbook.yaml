@@ -1,6 +1,7 @@
 ---
 - hosts: 127.0.0.1
-  sudo: true
+  become: yes
+  become_user: root
   tasks:
     - apt: name=python state=present
     - apt: name=python-dev state=present

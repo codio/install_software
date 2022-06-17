@@ -9,6 +9,7 @@ PY_FLAG=$1
 IS_TRUSTY() { [ "${CODENAME}" == "trusty" ]; }
 IS_XENIAL() { [ "${CODENAME}" == "xenial" ]; }
 IS_BIONIC() { [ "${CODENAME}" == "bionic" ]; }
+IS_JAMMY() { [ "${CODENAME}" == "jammy" ]; }
 USE_PYTHON3() { [ "${PY_FLAG}" == "python3" ]; }
 
 do_cmd()
@@ -56,6 +57,11 @@ if IS_BIONIC; then
     ansible --version | grep -q '2.7.5' 2> /dev/null
     is_ansible_right=$?
 fi
+if IS_BIONIC; then
+    ansible --version | grep -q '2.10' 2> /dev/null
+    is_ansible_right=$?
+fi
+
 if [ $is_ansible_right -ne 0 ]; then
     do_cmd sudo apt-get update
     if USE_PYTHON3; then
@@ -73,8 +79,12 @@ if [ $is_ansible_right -ne 0 ]; then
         do_cmd sudo apt-get -y install wget python python-crypto python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko sshpass
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5-1ppa_bionic_all.deb
     fi
-    do_cmd sudo dpkg -i /tmp/ansible.deb
-    do_cmd sudo rm /tmp/ansible.deb
+    if IS_JAMMY; then
+        do_cmd sudo apt install ansible
+    else
+        do_cmd sudo dpkg -i /tmp/ansible.deb
+        do_cmd sudo rm /tmp/ansible.deb
+    fi
 fi
 
 download_playbook
