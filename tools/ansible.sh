@@ -80,7 +80,8 @@ if [ $is_ansible_right -ne 0 ]; then
         do_cmd sudo wget -O /tmp/ansible.deb https://raw.githubusercontent.com/codio/install_software/${BRANCH}/tools/ansible_2.7.5-1ppa_bionic_all.deb
     fi
     if IS_JAMMY; then
-        do_cmd sudo apt install ansible
+        do_cmd sudo apt update
+        do_cmd sudo apt install -y ansible
     else
         do_cmd sudo dpkg -i /tmp/ansible.deb
         do_cmd sudo rm /tmp/ansible.deb
