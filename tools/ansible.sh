@@ -65,7 +65,7 @@ fi
 if [ $is_ansible_right -ne 0 ]; then
     do_cmd sudo apt-get update
     if USE_PYTHON3; then
-      do_cmd sudo apt-get -y install python3
+      do_cmd sudo apt-get -y install python3 python3-apt
     fi
     if IS_TRUSTY; then
         do_cmd sudo apt-get -y install wget python python-support python-yaml python-httplib2 python-setuptools python-markupsafe python-jinja2 python-paramiko sshpass
