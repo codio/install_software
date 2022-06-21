@@ -3,7 +3,7 @@
 COOKBOOK_PATH=/tmp/codio_playbook
 
 if test -z "${BRANCH}"; then
-    BRANCH=jammy_support
+    BRANCH=master
 fi
 
 
