@@ -4,7 +4,7 @@ COOKBOOK_PATH=/tmp/codio_playbook
 
 if test -n "${BRANCH}"
     BRANCH=jammy_support
-end
+fi
 
 
 CODENAME=$(lsb_release -c -s)
