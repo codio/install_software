@@ -98,3 +98,12 @@
         daemon_reload: yes
         name: novnc-3000
       when: ansible_distribution_version >= "16.04"
+    - debug:
+      msg: 
+        - "" 
+        - "******************************************************************************************************"
+        - "*    YOU MUST NOW RESTART YOUR BOX FROM THE MENU Project-Restart Box.                                *" 
+        - "******************************************************************************************************"
+        - "" 
+        - "A Virtual Desktop item has been added automatically to the Preview menu in the menu bar above to allow you access X-server."
+        - "For more information on this see https://docs.codio.com/common/develop/ide/boxes/installsw/gui.html"
