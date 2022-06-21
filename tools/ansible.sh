@@ -1,7 +1,11 @@
 #!/bin/bash
 
 COOKBOOK_PATH=/tmp/codio_playbook
-BRANCH=master
+
+if test -n "${BRANCH}"
+    BRANCH=jammy_support
+end
+
 
 CODENAME=$(lsb_release -c -s)
 PY_FLAG=$1
