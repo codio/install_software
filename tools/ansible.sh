@@ -2,7 +2,7 @@
 
 COOKBOOK_PATH=/tmp/codio_playbook
 
-if test -n "${BRANCH}"
+if test -n "${BRANCH}"; then
     BRANCH=jammy_support
 fi
 
