@@ -17,3 +17,7 @@
         - mysql-client
         - python-mysqldb
     - copy: src=my.cnf dest=/home/codio/.my.cnf
+    - name: Instructions
+      debug:
+        msg: 
+        - "Mysql password root user password is 'codio'"
