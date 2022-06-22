@@ -1,6 +1,7 @@
 ---
 - hosts: 127.0.0.1
-  sudo: true
+  become: yes
+  become_user: root
   tasks:
     - apt: name=ca-certificates state=latest
     - apt: name=apt-transport-https state=present
@@ -60,3 +61,8 @@
         recurse: yes
         owner: codio
         group: codio
+    - name: Instructions
+      debug:
+        msg: 
+        - "Add the line to you preview configuration to access ungit from the Menu"
+        - "    \"ungit\": \"https://{{domain8000}}/#/repository?path=%2Fhome%2Fcodio%2Fworkspace\"'

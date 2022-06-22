@@ -1,7 +1,8 @@
 ---
 - name: Install MySQL
   hosts: 127.0.0.1
-  sudo: True
+  become: yes
+  become_user: root
   vars:
     MySQL_root_pass: codio
   tasks:
@@ -16,3 +17,7 @@
         - mysql-client
         - python-mysqldb
     - copy: src=my.cnf dest=/home/codio/.my.cnf
+    - name: Instructions
+      debug:
+        msg: 
+        - "Mysql password root user password is 'codio'"

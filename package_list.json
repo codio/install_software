@@ -5,161 +5,161 @@
       "xserver": {
         "name": "X server",
         "description": "Virtual X Server and vnc client to connect to. Allows to start GUI apps in the box",
-        "script": "xserver/install.sh",
+        "script": "xserver python3",
         "version": "1.1.7",
         "category": "utilities"
       },
       "apache": {
         "name": "HTTP Apache 2 server",
         "description": "A secure, efficient and extensible server that provides HTTP services in sync with the current HTTP standards.",
-        "script": "apache/install.sh",
+        "script": "apache",
         "version": "2.4.7",
         "category": "web_development"
       },
       "python2": {
         "name": "Python2 tools set",
         "description": "Set of tools for python2 development.",
-        "script": "python2/install.sh",
+        "script": "python2",
         "version": "2.7.9",
         "category": "programming_languages"
       },
       "python3": {
         "name": "Python3 tools set",
         "description": "Set of tools for python3 development.",
-        "script": "python3/install.sh",
+        "script": "python3",
         "version": "3.4.3",
         "category": "programming_languages"
       },
       "openjdk8": {
         "name": "Java 8 (OpenJDK)",
         "description": "Java is a general purpose, high-level programming language.",
-        "script": "openjdk/install.sh",
+        "script": "openjdk",
         "version": "8",
         "category": "programming_languages"
       },
       "openjdk11": {
         "name": "Java 11 (OpenJDK zulu)",
         "description": "Java is a general purpose, high-level programming language.",
-        "script": "openjdk-zulu-11/install.sh",
+        "script": "openjdk-zulu-11",
         "version": "11",
         "category": "programming_languages"
       },
       "nodejs": {
         "name": "NodeJS",
         "description": "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.",
-        "script": "nodejs/install.sh",
+        "script": "nodejs",
         "version": "14",
         "category": "programming_languages"
       },
       "zsh": {
         "name": "Zsh shell",
         "description": "Zsh is a shell designed for interactive use, although it is also a powerful scripting language.",
-        "script": "zsh/install.sh",
+        "script": "zsh",
         "version": "5.0.2",
         "category": "shells"
       },
       "gdb": {
         "name": "GDB",
         "description": "The GNU Project debugger, allows you to see what is going on `inside' another program while it executes -- or what another program was doing at the moment it crashed.",
-        "script": "gdb/install.sh",
+        "script": "gdb",
         "version": "7.7.1",
         "category": "utilities"
       },
       "mongo": {
         "name": "MongoDB",
         "description": "MongoDB (from humongous) is a cross-platform document-oriented database. Classified as a NoSQL database.",
-        "script": "mongo/install.sh",
+        "script": "mongo",
         "version": "2.4.9",
         "category": "data_stores"
       },
       "mysql": {
         "name": "MySQL",
         "description": "MySQL is an open-source relational database management system (RDBMS)",
-        "script": "mysql/install.sh",
+        "script": "mysql",
         "version": "5.7.30",
         "category": "data_stores"
       },
       "python-lsp": {
         "name": "Language Server for Python",
         "description": "A Python 2.7 and 3.4+ implementation of the Language Server Protocol making use of Jedi, pycodestyle, Pyflakes and YAPF.",
-        "script": "python-lsp/install.sh",
+        "script": "python-lsp",
         "version": "0.4.2",
         "category": "utilities"
       },
       "java-lsp": {
         "name": "Language Server for Java",
         "description": "The Eclipse JDT Language Server is a Java language specific implementation of the Language Server Protocol.",
-        "script": "java-lsp/install.sh",
+        "script": "java-lsp",
         "version": "0.3.0",
         "category": "utilities"
       },
       "ocaml-lsp": {
         "name": "Language Server for OCaml",
         "description": "A language server for OCaml and related languages.",
-        "script": "ocaml-lsp/install.sh",
+        "script": "ocaml-lsp",
         "version": "1.12.0",
         "category": "utilities"
       },
       "ungit": {
         "name": "Ungit",
         "description": "The easiest way to use git.",
-        "script": "ungit/install.sh",
+        "script": "ungit",
         "version": "1.0.0",
         "category": "utilities"
       },
       "autostart": {
         "name": "Autostart Support",
         "description": "Script autostart for ~/startup.sh, workspace startup.sh and .guides/startup.sh as BASH files",
-        "script": "autostart/install.sh",
+        "script": "autostart",
         "version": "1.0.0",
         "category": "utilities"
       },
       "omnidb": {
         "name": "OmniDB",
         "description": "browser-based tool that simplifies database management, starts on 5000 port",
-        "script": "omnidb/install.sh",
+        "script": "omnidb",
         "version": "2.17.0",
         "category": "utilities"
       },
       "mariadb": {
         "name": "MariaDB",
         "description": "MariaDB is an open-source relational database management system (RDBMS)",
-        "script": "mariadb/install.sh",
+        "script": "mariadb",
         "version": "10.1.0",
         "category": "data_stores"
       },
       "vscode": {
         "name": "VSCode",
         "description": "Visual Studio Code is a free source-code editor made by Microsoft. Runs on 4000 port. 1G box or more is recommended.",
-        "script": "vscode/install.sh",
+        "script": "vscode",
         "version": "4.1.0",
         "category": "utilities"
       },
       "helper_mssql": {
         "name": "Helper MSSql",
         "description": "MSSql codio helper",
-        "script": "helper_mssql/install.sh",
+        "script": "helper_mssql",
         "version": "1.0.0",
         "category": "utilities"
       },
       "helper_mysql": {
         "name": "Helper MySql",
         "description": "MySql codio helper",
-        "script": "helper_mysql/install.sh",
+        "script": "helper_mysql",
         "version": "1.0.0",
         "category": "utilities"
       },
       "helper_postgres": {
         "name": "Helper PostgreSQL",
         "description": "PostgreSQL codio helper",
-        "script": "helper_postgres/install.sh",
+        "script": "helper_postgres",
         "version": "1.0.0",
         "category": "utilities"
       },
       "pencilcode": {
         "name": "PencilCode",
         "description": "Pencilcode server on Codio. Runs on 8008 port.",
-        "script": "pencilcode/install.sh",
+        "script": "pencilcode",
         "version": "1.0.0",
         "category": "utilities"
       }

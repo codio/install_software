@@ -1,6 +1,7 @@
 ---
 - hosts: 127.0.0.1
-  sudo: true
+  become: yes
+  become_user: root
   tasks:
     - name: ensure zulu apt repository key is present
       apt_key:
