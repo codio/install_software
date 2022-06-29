@@ -9,7 +9,7 @@
     - name: Install mysql-connector-python
       become_user: codio
       pip:
-        name: mysql-connector-python
+        name: mysql-connector-python==8.0.6
 
     - name: Creates directory
       become_user: codio
