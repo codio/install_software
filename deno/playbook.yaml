@@ -1,0 +1,43 @@
+---
+- hosts: 127.0.0.1
+  become: true
+  become_user: root
+  tasks:
+    - apt: name=ca-certificates state=latest
+    - apt: name=apt-transport-https state=present
+
+    - name: Install unzip
+      apt: name=unzip state=latest
+
+    - name: add repo
+      become: yes
+      shell: curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+
+    - name: Install nodejs
+      apt: name=nodejs state=latest
+
+    - name: Install Deno
+      become: yes
+      shell: curl -fsSL https://deno.land/x/install/install.sh | sudo -E bash -
+
+    - name: Check if Deno exists in environment
+      become: yes
+      shell: grep -q 'export DENO_INSTALL="/home/codio/.deno"' ~/.bashrc
+      register: deno_exists
+      ignore_errors: True
+    
+    - name: Check if PATH updated
+      become: yes
+      shell: grep -q 'export PATH="$DENO_INSTALL/bin:$PATH"' ~/.bashrc
+      register: path_updated
+      ignore_errors: True
+
+    - name: Add deno to PATH
+      become: yes
+      when: deno_exists.rc > 0
+      shell: echo 'export DENO_INSTALL="/home/codio/.deno"'  >> ~/.bashrc
+
+    - name: Update PATH
+      become: yes
+      when: path_updated.rc > 0
+      shell: echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.bashrc
