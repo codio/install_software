@@ -46,3 +46,8 @@
       pip:
         name: sourcemap
         state: present
+    
+    - name: Install requests
+      pip:
+        name: requests
+        state: present
