@@ -41,3 +41,8 @@
       become: yes
       when: path_updated.rc > 0
       shell: echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.bashrc
+
+    - name: Install sourcemap
+      pip:
+        name: sourcemap
+        state: present
