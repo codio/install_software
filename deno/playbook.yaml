@@ -43,11 +43,13 @@
       shell: echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.bashrc
 
     - name: Install sourcemap
+      become: yes
       pip:
         name: sourcemap
         state: present
     
     - name: Install requests
+      become: yes
       pip:
         name: requests
         state: present
