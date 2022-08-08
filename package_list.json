@@ -51,6 +51,13 @@
         "version": "14",
         "category": "programming_languages"
       },
+      "deno": {
+        "name": "Deno",
+        "description": "Deno is a JavaScript, TypeScript, and WebAssembly runtime with secure defaults and a great developer experience.",
+        "script": "deno",
+        "version": "1",
+        "category": "programming_languages"
+      },
       "zsh": {
         "name": "Zsh shell",
         "description": "Zsh is a shell designed for interactive use, although it is also a powerful scripting language.",
