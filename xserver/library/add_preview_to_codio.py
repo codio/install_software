@@ -17,9 +17,9 @@ def update_codio():
     codio_json = read_codio_json()
     preview_section = codio_json.get('preview', OrderedDict())
     if 'Virtual Desktop' in preview_section:
-        preview_section['Virtual Desktop'] = 'https://{{domain3000}}/'
+        preview_section['Virtual Desktop'] = 'https://{{domain3050}}/'
     else:
-        preview_section = OrderedDict([('Virtual Desktop', 'https://{{domain3000}}/')] + list(preview_section.items()))
+        preview_section = OrderedDict([('Virtual Desktop', 'https://{{domain3050}}/')] + list(preview_section.items()))
     codio_json['preview'] = preview_section
     
     with open(run_file, 'w+') as file:

@@ -2,13 +2,13 @@
 User = root
 Group = root
 WorkingDirectory = /opt/novnc/noVNC-master/
-ExecStart = /opt/novnc/noVNC-master/utils/novnc_proxy --vnc localhost:5900 --heartbeat 10 --listen 3000
+ExecStart = /opt/novnc/noVNC-master/utils/novnc_proxy --vnc localhost:5900 --heartbeat 10 --listen 3050
 Restart=always
 RestartSec=5s
 
 [Unit]
 Description = NO VNC
-After = x11vnc.service
+After = vnc.service
 
 [Install]
 WantedBy = multi-user.target
