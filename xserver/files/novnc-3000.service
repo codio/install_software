@@ -1,13 +1,13 @@
 [Service]
 User = root
 Group = root
-ExecStartPre = /bin/cp /opt/novnc/noVNC-master/vnc_lite.html /opt/novnc/noVNC-master/index.html
-ExecStart = /opt/websockify-env/bin/websockify --heartbeat 20 --web /opt/novnc/noVNC-master 3000 localhost:5900
+WorkingDirectory = /opt/novnc/noVNC-master/
+ExecStart = /opt/novnc/noVNC-master/utils/novnc_proxy --vnc localhost:5900 --heartbeat 10 --listen 3000
 Restart=always
 RestartSec=5s
 
 [Unit]
-Description = X11VNC
+Description = NO VNC
 After = x11vnc.service
 
 [Install]
