@@ -65,4 +65,4 @@
       debug:
         msg: 
         - "Add the line to you preview configuration to access ungit from the Menu"
-        - "    \"ungit\": \"https://{{domain8000}}/#/repository?path=%2Fhome%2Fcodio%2Fworkspace\""
+        - "    \"ungit\": \"https://{{\"{{\"}}domain8000{{\"}}\"}}/#/repository?path=%2Fhome%2Fcodio%2Fworkspace\""
