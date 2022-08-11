@@ -5,15 +5,14 @@
   tasks:
     - apt: name=ca-certificates state=latest
     - apt: name=apt-transport-https state=present
-    - name: Add apt key for nodesource
+    
+    - name: Add nodejs repo
       become: yes
-      shell: curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
-    - name: Add repo for nodesource
-      apt_repository:
-        repo: 'deb https://deb.nodesource.com/node_10.x {{ ansible_distribution_release }} main' 
-        update_cache: yes
+      shell: curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+
     - name: Install nodejs
       apt: name=nodejs state=latest
+
     - name: Install "ungit"
       npm:
         name: ungit
@@ -65,4 +64,4 @@
       debug:
         msg: 
         - "Add the line to you preview configuration to access ungit from the Menu"
-        - "    \"ungit\": \"https://{{domain8000}}/#/repository?path=%2Fhome%2Fcodio%2Fworkspace\""
+        - "    \"ungit\": \"https://{{\"{{\"}}domain8000{{\"}}\"}}/#/repository?path=%2Fhome%2Fcodio%2Fworkspace\""

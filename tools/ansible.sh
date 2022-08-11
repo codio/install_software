@@ -96,8 +96,8 @@ download_playbook
 
 do_cmd sudo apt-get update
 
-if USE_PYTHON3; then
-  sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml" -e 'ansible_python_interpreter=/usr/bin/python3'
+if USE_PYTHON3 || IS_JAMMY; then
+    sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml" -e 'ansible_python_interpreter=/usr/bin/python3'
 elif IS_TRUSTY; then
     sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml"
 else
