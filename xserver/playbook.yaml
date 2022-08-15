@@ -79,7 +79,7 @@
           - "*    YOU MUST NOW RESTART YOUR BOX FROM THE MENU Project-Restart Box.                                *" 
           - "******************************************************************************************************"
           - "" 
-          - "INFO: Access to the desktop uses 3050 port, use {{domain3050}}!" 
+          - "INFO: Access to the desktop uses 3050 port, use \{\{domain3050\}\}!" 
           - "" 
           - "A Virtual Desktop item has been added automatically to the Preview menu in the menu bar above to allow you access X-server."
           - "For more information on this see https://docs.codio.com/common/develop/ide/boxes/installsw/gui.html"
