@@ -5,68 +5,60 @@
   tasks:
     - apt: update_cache=yes
     - apt: name=xvfb state=present
-    - apt: name=x11vnc state=present
+    - apt: name=x11vnc state=absent
     - apt: name=openbox state=present
-    - apt: name=python-virtualenv state=present
-      when: ansible_distribution_version < "22.04"
-    - apt: name=virtualenv state=present
-      when: ansible_distribution_version >= "22.04"
-    - apt: name=python3-dev state=present
+    - apt: name=tigervnc-standalone-server state=present
     - apt: name=python3-pip state=present
-    - apt: name=python3.4-venv state=present
-      when: ansible_distribution_major_version|int == 14 and ansible_os_family == "Debian"
-    - apt: name=python3-venv state=present
-      when: ansible_distribution_major_version|int > 14 and ansible_os_family == "Debian"
     - apt: name=python3-numpy state=present
-      when: ansible_distribution_major_version|int > 14 and ansible_os_family == "Debian"
-    - name: Create virtualenv
-      command:
-        cmd: /usr/bin/python3 -m venv /opt/websockify-env
-    - name: Install numpy
-      pip:
-        name: numpy
-        version: 1.16.6
-        state: present
-        virtualenv: /opt/websockify-env
-        virtualenv_python: python3
-      when: ansible_distribution_major_version|int == 14 and ansible_os_family == "Debian"
-    - name: Install websockify
-      pip:
-        name: websockify
-        state: present
-        virtualenv: /opt/websockify-env
-        virtualenv_python: python3
     - apt: name=xterm state=absent
+
     - stat: path=/opt/novnc/noVNC-master
       register: novnc
+
     - name: Creates novnc directory
       file: path=/opt/novnc state=directory
+
     - name: Download novnc
-      shell: curl -fsSL https://github.com/novnc/noVNC/archive/v1.0.0.tar.gz | tar zxf - -C /opt/novnc && rm -rf /opt/novnc/noVNC-master ; mv /opt/novnc/noVNC-1.0.0 /opt/novnc/noVNC-master
+      shell: curl -fsSL https://github.com/novnc/noVNC/archive/v1.3.0.tar.gz | tar zxf - -C /opt/novnc && rm -rf /opt/novnc/noVNC-master ; mv /opt/novnc/noVNC-1.3.0 /opt/novnc/noVNC-master
 
-    - name: Upstart for openbox
-      copy: src=openbox.conf dest=/etc/init/openbox.conf
-      when: ansible_distribution_version == "14.04"
-    - name: Upstart for x11vnc
-      copy: src=x11vnc.conf dest=/etc/init/x11vnc.conf
-      when: ansible_distribution_version == "14.04"
-    - name: Upstart for novnc-3000
-      copy: src=novnc-3000.conf dest=/etc/init/novnc-3000.conf
-      when: ansible_distribution_version == "14.04"
-
+# remove old services
     - name: Systemd for openbox
-      copy: src=openbox.service dest=/etc/systemd/system/openbox.service
-      when: ansible_distribution_version >= "16.04"
+      file: path=/etc/systemd/system/openbox.service state=absent
+
     - name: Systemd for x11vnc
-      copy: src=x11vnc.service dest=/etc/systemd/system/x11vnc.service
-      when: ansible_distribution_version >= "16.04"
+      file: path=/etc/systemd/system/x11vnc.service state=absent
+
     - name: Systemd for novnc-3000
-      copy: src=novnc-3000.service dest=/etc/systemd/system/novnc-3000.service
-      when: ansible_distribution_version >= "16.04"
+      file: path=/etc/systemd/system/novnc-3000.service state=absent
 
     - file: path=/etc/init/novnc.conf state=absent
+# end
+
+    - name: Systemd for novnc
+      copy: src=novnc.service dest=/etc/systemd/system/novnc.service
+
+    - name: Systemd for vnc
+      copy: src=vnc.service dest=/etc/systemd/system/vnc.service
+
+
+
     - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
     - copy: src=rc.xml dest=/etc/xdg/openbox/rc.xml
+    - copy: src=index.html dest=/opt/novnc/noVNC-master/index.html
+
+    - name: vnc restarted
+      systemd:
+        enabled: yes
+        state: restarted
+        daemon_reload: yes
+        name: vnc
+    - name: novnc restarted
+      systemd:
+        enabled: yes
+        state: restarted
+        daemon_reload: yes
+        name: novnc
+
     - name: Install commentjson
       pip:
         name: commentjson
@@ -80,33 +72,14 @@
         owner: codio
         group: codio
 
-    - name: openbox restarted
-      systemd:
-        enabled: yes
-        state: restarted
-        daemon_reload: yes
-        name: openbox
-      when: ansible_distribution_version >= "16.04"
-    - name: x11vnc restarted
-      systemd:
-        enabled: yes
-        state: restarted
-        daemon_reload: yes
-        name: x11vnc
-      when: ansible_distribution_version >= "16.04"
-    - name: novnc-3000 restarted
-      systemd:
-        enabled: yes
-        state: restarted
-        daemon_reload: yes
-        name: novnc-3000
-      when: ansible_distribution_version >= "16.04"
     - name: Restart Instructions
       debug:
         msg: 
           - "******************************************************************************************************"
           - "*    YOU MUST NOW RESTART YOUR BOX FROM THE MENU Project-Restart Box.                                *" 
           - "******************************************************************************************************"
+          - "" 
+          - "INFO: Access to the desktop uses 3050 port, use {%raw%}{{domain3050}}{%endraw%}!" 
           - "" 
           - "A Virtual Desktop item has been added automatically to the Preview menu in the menu bar above to allow you access X-server."
           - "For more information on this see https://docs.codio.com/common/develop/ide/boxes/installsw/gui.html"
