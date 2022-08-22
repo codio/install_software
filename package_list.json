@@ -169,6 +169,13 @@
         "script": "pencilcode",
         "version": "1.0.0",
         "category": "utilities"
+      },
+      "r-studio": {
+        "name": "R Studio",
+        "description": "R is an open-source programming language and free environment that specializes in statistical computing and graphical representation.",
+        "script": "r-studio",
+        "version": "2022.07.1",
+        "category": "IDE"
       }
 
    }

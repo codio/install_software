@@ -1,0 +1,52 @@
+---
+- hosts: 127.0.0.1
+  become: yes
+  become_user: root
+  tasks:
+    - apt: update_cache=yes
+    - apt: name=build-essential state=present
+    - apt: name=software-properties-common state=present
+    - apt: name=dirmngr state=present
+
+    - name: cpan apt key
+      get_url:
+        url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
+        dest: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+
+    - name: Add R repository into sources list
+      apt_repository:
+        repo: deb https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/
+        state: present
+
+    - apt: update_cache=yes
+    - apt: name=r-base state=present
+    - name: Install r studio .deb package
+      apt:
+        deb: https://download2.rstudio.org/server/bionic/amd64/rstudio-server-2022.07.1-554-amd64.deb
+    
+    - name: Systemd config
+      copy: src=rstudio-server-codio.service dest=/etc/systemd/system/rstudio-server-codio.service
+    - name: rstudio config config
+      copy: src=rserver.conf dest=/etc/rstudio/rserver.conf
+    - name: change permission
+      file:
+        path: /var/lib/rstudio-server/rstudio-os.sqlite
+        owner: codio
+        group: codio
+
+    - name: rstudio original disabled
+      systemd:
+        enabled: no
+        state: stopped
+        daemon_reload: yes
+        name: rstudio-server
+    - name: rstudio restarted
+      systemd:
+        enabled: yes
+        state: restarted
+        daemon_reload: yes
+        name: rstudio-server-codio
+    - name: Restart Instructions
+      debug:
+        msg: 
+          - "INFO: Access to the r studio uses 8787 port, use {%raw%}{{domain8787}}{%endraw%}!" 
