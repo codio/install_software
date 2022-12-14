@@ -2,7 +2,7 @@
 User = codio
 Group = codio
 Type=forking
-ExecStart = /usr/bin/vncserver :0  -verbose -SecurityTypes None -auth /tmp/codio.auth -xstartup /usr/bin/openbox
+ExecStart = /usr/bin/vncserver :0  -verbose -SecurityTypes None -PasswordFile /tmp/codio.auth -xstartup /usr/bin/openbox
 ExecStop = /usr/bin/vncserver -kill :*
 ExecStartPre=-/usr/bin/vncserver -kill :* 
 Restart=always
