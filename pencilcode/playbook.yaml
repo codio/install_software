@@ -3,7 +3,7 @@
   become: true
   tasks:
     - name: Add nodesource repository
-      shell: curl -sL https://deb.nodesource.com/setup_10.x | bash -
+      shell: curl -sL https://deb.nodesource.com/setup_16.x | bash -
 
     - apt: update_cache=yes
     - apt: name=nodejs state=present

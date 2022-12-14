@@ -6,13 +6,12 @@
     - apt: update_cache=yes
     - apt: name=ca-certificates state=latest
     - apt: name=apt-transport-https state=present
-    - name: Add apt key for nodesource
-      become: yes
-      shell: curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
-    - name: Add repo for nodesource
-      apt_repository:
-        repo: 'deb https://deb.nodesource.com/node_13.x {{ ansible_distribution_release }} main'
-        update_cache: yes
+    
+    - name: Add nodesource repository
+      shell: curl -sL https://deb.nodesource.com/setup_16.x | bash -
+
+    - apt: update_cache=yes
+    - apt: name=nodejs state=present
 
     - name: Install nodejs
       apt: name=nodejs state=latest
