@@ -9,8 +9,13 @@
         pkg:
         - mariadb-server
         - mariadb-client
-        - python-mysqldb
-        - python3-mysqldb
+      when: ansible_facts['distribution_major_version'] | int >= 22
+    
+    - apt: name=python-mysqldb
+      when: ansible_facts['distribution_major_version'] | int < 22
+    
+    - apt: name=python3-mysqldb
+      when: ansible_facts['distribution_major_version'] | int >= 22
 
     - name: Count files in /var/lib/mysql
       find: path=/var/lib/mysql patterns='*'
@@ -33,7 +38,9 @@
         priv: '*.*:ALL'
 
     - name: update root user
-      shell: mysql -e "update mysql.user set plugin='' where user='root';"
+      shell: mysql -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('codio');" --user="root" --password="codio"
+      become: true
+      become_user: root
 
     - name: restart MariaDB
       systemd:
