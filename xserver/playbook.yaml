@@ -38,8 +38,12 @@
       copy: src=novnc.service dest=/etc/systemd/system/novnc.service
 
     - name: Systemd for vnc
-      copy: src=vnc.service dest=/etc/systemd/system/vnc.service
+      copy: src=vnc-old.service dest=/etc/systemd/system/vnc.service
+      when: ansible_facts['distribution_major_version'] | int < 22
 
+    - name: Systemd for vnc ubuntu 22
+      copy: src=vnc.service dest=/etc/systemd/system/vnc.service
+      when: ansible_facts['distribution_major_version'] | int >= 22
 
 
     - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
