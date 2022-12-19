@@ -88,7 +88,7 @@
       },
       "python-lsp": {
         "name": "Language Server for Python",
-        "description": "A Python 3.4+ implementation of the Language Server Protocol making use of Jedi, pycodestyle, Pyflakes and YAPF.",
+        "description": "A Python 2.7 and 3.4+ implementation of the Language Server Protocol making use of Jedi, pycodestyle, Pyflakes and YAPF.",
         "script": "python-lsp",
         "version": "0.36.2",
         "category": "utilities"
