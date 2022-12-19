@@ -11,11 +11,16 @@
     - name: Set MySQL root again password before installing
       debconf: name='mysql-server' question='mysql-server/root_password_again' value='{{MySQL_root_pass | quote}}' vtype='password'
     - name: Install MySQL
-      apt: name={{ item }} state=present
-      with_items:
+      apt:
+        pkg:
         - mysql-server
         - mysql-client
-        - python-mysqldb
+        state: present
+        update_cache: yes
+    - apt: name=python-mysqldb
+      when: ansible_facts['distribution_major_version'] | int < 22
+    - apt: name=python3-mysqldb
+      when: ansible_facts['distribution_major_version'] | int >= 22
     - copy: src=my.cnf dest=/home/codio/.my.cnf
     - name: Instructions
       debug:
