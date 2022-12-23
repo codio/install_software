@@ -29,9 +29,23 @@
           - ocaml
           - ocaml-native-compilers
           - camlp4-extra
-          - opam=1.2.2-6
           - m4
           - build-essential
+    
+    - name: Install opam deps
+      apt:
+        state: present
+        name:
+          - opam=1.2.2-6
+      when: ansible_facts['distribution_major_version'] | int < 22
+    
+    - name: Install opam
+      apt:
+        state: present
+        name:
+          - opam
+      when: ansible_facts['distribution_major_version'] | int >= 22
+
 
     - copy: src=opam.sh dest=/tmp/opam.sh mode="u+xrw,g+x,o+x"
 
