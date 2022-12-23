@@ -20,6 +20,7 @@
       apt_repository:
         repo: 'ppa:avsm/ppa'
         update_cache: yes
+      when: ansible_facts['distribution_major_version'] | int < 22
 
     - name: Install opam deps
       apt:
