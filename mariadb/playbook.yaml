@@ -9,7 +9,6 @@
         pkg:
         - mariadb-server
         - mariadb-client
-      when: ansible_facts['distribution_major_version'] | int >= 22
     
     - apt: name=python-mysqldb
       when: ansible_facts['distribution_major_version'] | int < 22
