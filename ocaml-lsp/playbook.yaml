@@ -24,7 +24,7 @@
 
     - name: Install opam deps
       apt:
-        state: installed
+        state: present
         name:
           - ocaml
           - ocaml-native-compilers
