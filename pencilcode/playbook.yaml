@@ -8,6 +8,7 @@
     - apt: update_cache=yes
     - apt: name=nodejs state=present
     - apt: name=build-essential state=present
+    - apt: name=systemd state=latest
 
     - name: PencilCode checkout
       become: yes
