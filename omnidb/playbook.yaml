@@ -3,11 +3,13 @@
   become: yes
   become_user: root
   tasks:
+    - apt: update_cache=yes
     - name: Install dependencies
       apt:
         pkg:
           - libnss3
           - haproxy
+    - apt: name=systemd state=latest
 
     - name: Install OmniDB
       apt:
