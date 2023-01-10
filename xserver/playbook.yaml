@@ -19,7 +19,7 @@
       file: path=/opt/novnc state=directory
 
     - name: Download novnc
-      shell: curl -fsSL https://github.com/novnc/noVNC/archive/v1.3.0.tar.gz | tar zxf - -C /opt/novnc && rm -rf /opt/novnc/noVNC-master ; mv /opt/novnc/noVNC-1.3.0 /opt/novnc/noVNC-master
+      shell: curl -fsSL https://github.com/novnc/noVNC/archive/refs/tags/v1.4.0-beta.tar.gz | tar zxf - -C /opt/novnc && rm -rf /opt/novnc/noVNC-master ; mv /opt/novnc/noVNC-1.4.0-beta /opt/novnc/noVNC-master
 
 # remove old services
     - name: Systemd for openbox
@@ -40,8 +40,6 @@
     - name: Systemd for vnc
       copy: src=vnc.service dest=/etc/systemd/system/vnc.service
 
-
-
     - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
     - copy: src=rc.xml dest=/etc/xdg/openbox/rc.xml
     - copy: src=index.html dest=/opt/novnc/noVNC-master/index.html
@@ -52,12 +50,14 @@
         state: restarted
         daemon_reload: yes
         name: vnc
+      ignore_errors: yes
     - name: novnc restarted
       systemd:
         enabled: yes
         state: restarted
         daemon_reload: yes
         name: novnc
+      ignore_errors: yes
 
     - name: Install commentjson
       pip:
