@@ -45,16 +45,16 @@
         owner: root
         group: root
         mode: '0644'
-      when: haproxy_change_version is version(haproxy_version.stdout, '<')
+      when: haproxy_version.stdout is version(haproxy_change_version, '<')
 
     - name: haproxy 2.1+ config
       copy:
-        src: haproxy.cfg
+        src: haproxy21.cfg
         dest: /etc/haproxy/haproxy.cfg
         owner: root
         group: root
         mode: '0644'
-      when: haproxy_change_version is version(haproxy_version.stdout, '>=')
+      when: haproxy_version.stdout is version(haproxy_change_version, '>=')
 
     - name: Create a haproxy override directory
       file:
