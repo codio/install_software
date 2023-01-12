@@ -28,3 +28,6 @@
     - name: install python-language-server for ubuntu >= 22
       pip: name=python-language-server version=0.36.2
       when: ansible_facts['distribution_major_version'] | int >= 22
+
+    - name: install pycodestyle
+      pip: name=pycodestyle
