@@ -5,6 +5,7 @@
   tasks:
     - apt: name=ca-certificates state=latest
     - apt: name=apt-transport-https state=present
+    
     - name: Install Python
       apt:
         pkg:
@@ -54,10 +55,12 @@
       become: yes
       pip:
         name: sourcemap
+        executable: pip3
         state: present
     
     - name: Install requests
       become: yes
       pip:
         name: requests
+        executable: pip3
         state: present
