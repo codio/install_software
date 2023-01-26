@@ -27,27 +27,32 @@
 
     - name: Install Deno
       become: yes
+      become_user: codio
       shell: curl -fsSL https://deno.land/x/install/install.sh | bash -
 
     - name: Check if Deno exists in environment
       become: yes
+      become_user: codio
       shell: grep -q 'export DENO_INSTALL="/home/codio/.deno"' ~/.bashrc
       register: deno_exists
       ignore_errors: True
     
     - name: Check if PATH updated
       become: yes
+      become_user: codio
       shell: grep -q 'export PATH="$DENO_INSTALL/bin:$PATH"' ~/.bashrc
       register: path_updated
       ignore_errors: True
 
     - name: Add deno to PATH
       become: yes
+      become_user: codio
       when: deno_exists.rc > 0
       shell: echo 'export DENO_INSTALL="/home/codio/.deno"'  >> ~/.bashrc
 
     - name: Update PATH
       become: yes
+      become_user: codio
       when: path_updated.rc > 0
       shell: echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.bashrc
 
