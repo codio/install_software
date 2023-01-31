@@ -6,13 +6,12 @@
     - apt: update_cache=yes
     - apt: name=ca-certificates state=latest
     - apt: name=apt-transport-https state=present
-    - name: Add apt key for nodesource
-      become: yes
-      shell: curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
-    - name: Add repo for nodesource
-      apt_repository:
-        repo: 'deb https://deb.nodesource.com/node_13.x {{ ansible_distribution_release }} main'
-        update_cache: yes
+    
+    - name: Add nodesource repository
+      shell: curl -sL https://deb.nodesource.com/setup_16.x | bash -
+
+    - apt: update_cache=yes
+    - apt: name=nodejs state=present
 
     - name: Install nodejs
       apt: name=nodejs state=latest
@@ -21,17 +20,32 @@
       apt_repository:
         repo: 'ppa:avsm/ppa'
         update_cache: yes
+      when: ansible_facts['distribution_major_version'] | int < 22
 
     - name: Install opam deps
       apt:
-        state: installed
+        state: present
         name:
           - ocaml
           - ocaml-native-compilers
           - camlp4-extra
-          - opam=1.2.2-6
           - m4
           - build-essential
+    
+    - name: Install opam deps
+      apt:
+        state: present
+        name:
+          - opam=1.2.2-6
+      when: ansible_facts['distribution_major_version'] | int < 22
+    
+    - name: Install opam
+      apt:
+        state: present
+        name:
+          - opam
+      when: ansible_facts['distribution_major_version'] | int >= 22
+
 
     - copy: src=opam.sh dest=/tmp/opam.sh mode="u+xrw,g+x,o+x"
 

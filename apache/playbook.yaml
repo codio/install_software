@@ -3,7 +3,9 @@
   become: yes
   become_user: root
   tasks:
+    - apt: update_cache=yes
     - apt: name=apache2 state=present
+    - apt: name=systemd state=latest
     - name: Ensure apache2 is running
       service:
         name=apache2

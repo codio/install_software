@@ -2,12 +2,16 @@
 - hosts: 127.0.0.1
   become: yes
   become_user: root
+  vars:
+    haproxy_change_version: "2.1"
   tasks:
+    - apt: update_cache=yes
     - name: Install dependencies
       apt:
         pkg:
           - libnss3
           - haproxy
+    - apt: name=systemd state=latest
 
     - name: Install OmniDB
       apt:
@@ -29,13 +33,28 @@
         group: root
         mode: '0644'
 
-    - name: haproxy config
+    - name: Haproxy version
+      shell: haproxy -v | grep -oE 'version [0-9\.]+' | grep -oE '[0-9\.]+'
+      register: haproxy_version
+      ignore_errors: true
+
+    - name: haproxy before 2.1 config
       copy:
         src: haproxy.cfg
         dest: /etc/haproxy/haproxy.cfg
         owner: root
         group: root
         mode: '0644'
+      when: haproxy_version.stdout is version(haproxy_change_version, '<')
+
+    - name: haproxy 2.1+ config
+      copy:
+        src: haproxy21.cfg
+        dest: /etc/haproxy/haproxy.cfg
+        owner: root
+        group: root
+        mode: '0644'
+      when: haproxy_version.stdout is version(haproxy_change_version, '>=')
 
     - name: Create a haproxy override directory
       file:

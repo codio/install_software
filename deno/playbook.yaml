@@ -5,6 +5,15 @@
   tasks:
     - apt: name=ca-certificates state=latest
     - apt: name=apt-transport-https state=present
+    
+    - name: Install Python
+      apt:
+        pkg:
+        - python3
+        - python3-dev
+        - python3-pip
+        state: present
+        update_cache: true
 
     - name: Install unzip
       apt: name=unzip state=latest
@@ -18,27 +27,32 @@
 
     - name: Install Deno
       become: yes
-      shell: curl -fsSL https://deno.land/x/install/install.sh | sudo -E bash -
+      become_user: codio
+      shell: curl -fsSL https://deno.land/x/install/install.sh | bash -
 
     - name: Check if Deno exists in environment
       become: yes
+      become_user: codio
       shell: grep -q 'export DENO_INSTALL="/home/codio/.deno"' ~/.bashrc
       register: deno_exists
       ignore_errors: True
     
     - name: Check if PATH updated
       become: yes
+      become_user: codio
       shell: grep -q 'export PATH="$DENO_INSTALL/bin:$PATH"' ~/.bashrc
       register: path_updated
       ignore_errors: True
 
     - name: Add deno to PATH
       become: yes
+      become_user: codio
       when: deno_exists.rc > 0
       shell: echo 'export DENO_INSTALL="/home/codio/.deno"'  >> ~/.bashrc
 
     - name: Update PATH
       become: yes
+      become_user: codio
       when: path_updated.rc > 0
       shell: echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.bashrc
 
@@ -46,10 +60,12 @@
       become: yes
       pip:
         name: sourcemap
+        executable: pip3
         state: present
     
     - name: Install requests
       become: yes
       pip:
         name: requests
+        executable: pip3
         state: present

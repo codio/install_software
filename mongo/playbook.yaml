@@ -6,4 +6,22 @@
     - name: Override mongo defaults on ubuntu 14.04
       copy: src=mongo.conf dest=/etc/init/mongodb.override
       when: ansible_distribution_version == "14.04"
-    - apt: name=mongodb state=present
+    
+    - apt: name=mongodb state=present update_cache=yes
+      when: ansible_facts['distribution_major_version'] | int < 22
+    
+    - name: Get mongodb key
+      shell: wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc |  gpg --dearmor | sudo tee /usr/share/keyrings/mongodb.gpg > /dev/null
+      when: ansible_facts['distribution_major_version'] | int >= 22
+
+    - name: Add mongodb list
+      shell: echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+      when: ansible_facts['distribution_major_version'] | int >= 22
+    
+    - name: install mongodb-org
+      apt:
+        pkg:
+        - mongodb-org
+        state: present
+        update_cache: true
+      when: ansible_facts['distribution_major_version'] | int >= 22

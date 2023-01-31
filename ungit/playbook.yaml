@@ -3,8 +3,10 @@
   become: yes
   become_user: root
   tasks:
+    - apt: update_cache=yes
     - apt: name=ca-certificates state=latest
     - apt: name=apt-transport-https state=present
+    - apt: name=systemd state=latest
     
     - name: Add nodejs repo
       become: yes
