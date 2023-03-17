@@ -3,13 +3,21 @@
   become: yes
   become_user: root
   tasks:
+    - name: Check if java is installed
+      command: java -version
+      register: java_result
+      ignore_errors: True
+
     - apt_repository:
         repo: 'ppa:openjdk-r/ppa'
         update_cache: yes
+      when: java_result is failed
     - apt: name=openjdk-8-jdk state=latest
+      when: java_result is failed
     - name: Update alternatives
       become: yes
       shell: update-java-alternatives -s java-1.8.0-openjdk-amd64
+      when: java_result is failed
 
     - file: path=/usr/share/org.eclipse.jdt.ls state=directory
 
