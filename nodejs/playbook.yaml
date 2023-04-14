@@ -7,7 +7,7 @@
     - apt: name=apt-transport-https state=present
     - name: add repo
       become: yes
-      shell: curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+      shell: curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 
     - name: Install nodejs
       apt: name=nodejs state=latest
