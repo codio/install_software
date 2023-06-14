@@ -3,28 +3,37 @@
   become: yes
   become_user: root
   tasks:
+    - name: Check if java is installed
+      command: java -version
+      register: java_result
+      ignore_errors: True
+    
+    - name: Fetch Java version
+      shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/"//g'
+      register: java_version
+
     - name: ensure zulu apt repository key is present
       apt_key:
         id=0xB1998361219BD9C9
         keyserver=hkp://keyserver.ubuntu.com:80
         state=present
-      when: java_result is failed
+      when: (java_result is failed) or (java_version.stdout is version("11", "<"))
 
     - name: ensure the zulu apt repository is present
       apt_repository:
         repo='deb http://repos.azulsystems.com/ubuntu stable main'
         update_cache=yes
         state=present
-      when: java_result is failed
+      when: (java_result is failed) or (java_version.stdout is version("11", "<"))
 
     - apt: name=zulu-11 state=latest
-      when: java_result is failed
+      when: (java_result is failed) or (java_version.stdout is version("11", "<"))
 
     - name: correct java version selected
       alternatives:
         name: java
         path: /usr/lib/jvm/zulu-11-amd64/bin/java
-      when: java_result is failed
+      when: (java_result is failed) or (java_version.stdout is version("11", "<"))
 
     - file: path=/usr/share/org.eclipse.jdt.ls.1.12.0 state=directory
 
