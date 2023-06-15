@@ -35,17 +35,19 @@
         path: /usr/lib/jvm/zulu-11-amd64/bin/java
       when: (java_result is failed) or (java_version.stdout is version("11", "<"))
 
-    - file: path=/usr/share/org.eclipse.jdt.ls.1.12.0 state=directory
-
-    - unarchive:
-        src: https://www.eclipse.org/downloads/download.php?file=/jdtls/milestones/1.12.0/jdt-language-server-1.12.0-202206011637.tar.gz
-        dest: /usr/share/org.eclipse.jdt.ls.1.12.0
-        remote_src: True
-        creates: /usr/share/org.eclipse.jdt.ls/content.xml
-
     - file:
         path: /usr/share/org.eclipse.jdt.ls.1.12.0
         state: directory
         recurse: True
         owner: codio
         group: codio
+
+    - name: unarchive jdt ls
+      unarchive:
+        src: https://s3.amazonaws.com/codio-resources/jdt-language-server-1.12.0-202206011637.tar.gz
+        dest: /usr/share/org.eclipse.jdt.ls.1.12.0
+        remote_src: True
+        creates: /usr/share/org.eclipse.jdt.ls.1.12.0/content.xml
+        owner: codio
+        group: codio
+        extra_opts: ["--no-same-owner"]
