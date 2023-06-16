@@ -97,7 +97,7 @@
         "name": "Language Server for Java",
         "description": "The Eclipse JDT Language Server is a Java language specific implementation of the Language Server Protocol.",
         "script": "java-lsp",
-        "version": "0.3.0",
+        "version": "1.12.0",
         "category": "utilities"
       },
       "ocaml-lsp": {
