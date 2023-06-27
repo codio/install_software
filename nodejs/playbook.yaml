@@ -12,3 +12,8 @@
     - name: Install nodejs
       apt: name=nodejs state=latest
       
+    - name: Create symlink for nodejs
+      ansible.builtin.file:
+        src: /usr/bin/node
+        dest: /usr/bin/nodejs
+        state: link
