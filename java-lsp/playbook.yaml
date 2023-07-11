@@ -9,38 +9,35 @@
       ignore_errors: True
     
     - name: Fetch Java version
-      shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/"//g'
+      shell: java -version 2>&1 | head -1 | cut -d'"' -f2 | sed '/^1\./s///' | cut -d'.' -f1
       register: java_version
 
-    - name: ensure zulu apt repository key is present
-      apt_key:
-        id=0xB1998361219BD9C9
-        keyserver=hkp://keyserver.ubuntu.com:80
-        state=present
+    - file:
+      path: /usr/share/org.eclipse.jdt.ls.0.57.0
+      state: directory
+      recurse: True
+      owner: codio
+      group: codio
       when: (java_result is failed) or (java_version.stdout is version("11", "<"))
 
-    - name: ensure the zulu apt repository is present
-      apt_repository:
-        repo='deb http://repos.azulsystems.com/ubuntu stable main'
-        update_cache=yes
-        state=present
-      when: (java_result is failed) or (java_version.stdout is version("11", "<"))
-
-    - apt: name=zulu-11 state=latest
-      when: (java_result is failed) or (java_version.stdout is version("11", "<"))
-
-    - name: correct java version selected
-      alternatives:
-        name: java
-        path: /usr/lib/jvm/zulu-11-amd64/bin/java
+    - name: unarchive jdt ls
+      unarchive:
+        src: https://s3.amazonaws.com/codio-resources/jdt-language-server-0.57.0-202006172108.tar.gz
+        dest: /usr/share/org.eclipse.jdt.ls.0.57.0
+        remote_src: True
+        creates: /usr/share/org.eclipse.jdt.ls.0.57.0/content.xml
+        owner: codio
+        group: codio
+        extra_opts: ["--no-same-owner"]
       when: (java_result is failed) or (java_version.stdout is version("11", "<"))
 
     - file:
-        path: /usr/share/org.eclipse.jdt.ls.1.12.0
-        state: directory
-        recurse: True
-        owner: codio
-        group: codio
+      path: /usr/share/org.eclipse.jdt.ls.1.12.0
+      state: directory
+      recurse: True
+      owner: codio
+      group: codio
+      when: (java_result is failed) or (java_version.stdout is version("17", "<") and java_version.stdout is version("11", ">="))
 
     - name: unarchive jdt ls
       unarchive:
@@ -51,3 +48,23 @@
         owner: codio
         group: codio
         extra_opts: ["--no-same-owner"]
+      when: (java_result is failed) or (java_version.stdout is version("17", "<") and java_version.stdout is version("11", ">="))
+
+    - file:
+      path: /usr/share/org.eclipse.jdt.ls.1.25.0
+      state: directory
+      recurse: True
+      owner: codio
+      group: codio
+      when: (java_result is failed) or (java_version.stdout is version("17", ">="))
+
+    - name: unarchive jdt ls
+      unarchive:
+        src: https://s3.amazonaws.com/codio-resources/jdt-language-server-1.25.0-202306291518.tar.gz
+        dest: /usr/share/org.eclipse.jdt.ls.1.25.0
+        remote_src: True
+        creates: /usr/share/org.eclipse.jdt.ls.1.25.0/content.xml
+        owner: codio
+        group: codio
+        extra_opts: ["--no-same-owner"]
+      when: (java_result is failed) or (java_version.stdout is version("17", ">="))
