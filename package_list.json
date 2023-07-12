@@ -7,168 +7,168 @@
         "description": "Virtual X Server and vnc client to connect to. Allows to start GUI apps in the box. Uses 3050 port for desktop access",
         "script": "xserver python3",
         "version": "1.1.7",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "apache": {
         "name": "HTTP Apache 2 server",
         "description": "A secure, efficient and extensible server that provides HTTP services in sync with the current HTTP standards.",
         "script": "apache",
         "version": "2.4.7",
-        "category": "web_development"
+        "category": "Web Dev"
       },
       "python2": {
         "name": "Python2 tools set",
         "description": "Set of tools for python2 development.",
         "script": "python2",
         "version": "2.7.9",
-        "category": "programming_languages"
+        "category": "Languages"
       },
       "python3": {
         "name": "Python3 tools set",
         "description": "Set of tools for python3 development.",
         "script": "python3",
         "version": "3.4.3",
-        "category": "programming_languages"
+        "category": "Languages"
       },
       "openjdk8": {
         "name": "Java 8 (OpenJDK)",
         "description": "Java is a general purpose, high-level programming language.",
         "script": "openjdk",
         "version": "8",
-        "category": "programming_languages"
+        "category": "Languages"
       },
       "openjdk11": {
         "name": "Java 11 (OpenJDK zulu)",
         "description": "Java is a general purpose, high-level programming language.",
         "script": "openjdk-zulu-11",
         "version": "11",
-        "category": "programming_languages"
+        "category": "Languages"
       },
       "nodejs": {
         "name": "NodeJS",
         "description": "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient.",
         "script": "nodejs",
         "version": "18",
-        "category": "programming_languages"
+        "category": "Languages"
       },
       "deno": {
         "name": "Deno",
         "description": "Deno is a JavaScript, TypeScript, and WebAssembly runtime with secure defaults and a great developer experience.",
         "script": "deno",
         "version": "1",
-        "category": "programming_languages"
+        "category": "Languages"
       },
       "zsh": {
         "name": "Zsh shell",
         "description": "Zsh is a shell designed for interactive use, although it is also a powerful scripting language.",
         "script": "zsh",
         "version": "5.0.2",
-        "category": "shells"
+        "category": "Shells"
       },
       "gdb": {
         "name": "GDB",
         "description": "The GNU Project debugger, allows you to see what is going on `inside' another program while it executes -- or what another program was doing at the moment it crashed.",
         "script": "gdb",
         "version": "7.7.1",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "mongo": {
         "name": "MongoDB",
         "description": "MongoDB (from humongous) is a cross-platform document-oriented database. Classified as a NoSQL database.",
         "script": "mongo",
         "version": "2.4.9",
-        "category": "data_stores"
+        "category": "Data Stores"
       },
       "mysql": {
         "name": "MySQL",
         "description": "MySQL is an open-source relational database management system (RDBMS)",
         "script": "mysql",
         "version": "5.7.30",
-        "category": "data_stores"
+        "category": "Data Stores"
       },
       "python-lsp": {
         "name": "Language Server for Python",
         "description": "A Python 2.7 and 3.4+ implementation of the Language Server Protocol making use of Jedi, pycodestyle, Pyflakes and YAPF.",
         "script": "python-lsp",
         "version": "0.36.2",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "java-lsp": {
         "name": "Language Server for Java",
         "description": "The Eclipse JDT Language Server is a Java language specific implementation of the Language Server Protocol.",
         "script": "java-lsp",
         "version": "1.12.0",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "ocaml-lsp": {
         "name": "Language Server for OCaml",
         "description": "A language server for OCaml and related languages.",
         "script": "ocaml-lsp",
         "version": "1.12.0",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "ungit": {
         "name": "Ungit",
         "description": "The easiest way to use git.",
         "script": "ungit",
         "version": "1.0.0",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "autostart": {
         "name": "Autostart Support",
         "description": "Script autostart for ~/startup.sh, workspace startup.sh and .guides/startup.sh as BASH files",
         "script": "autostart",
         "version": "1.0.0",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "omnidb": {
         "name": "OmniDB",
         "description": "browser-based tool that simplifies database management, starts on 5000 port",
         "script": "omnidb",
         "version": "2.17.0",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "mariadb": {
         "name": "MariaDB",
         "description": "MariaDB is an open-source relational database management system (RDBMS)",
         "script": "mariadb",
         "version": "10.1.0",
-        "category": "data_stores"
+        "category": "Data Stores"
       },
       "vscode": {
         "name": "VSCode",
         "description": "Visual Studio Code is a free source-code editor made by Microsoft. Runs on 4000 port. 1G box or more is recommended.",
         "script": "vscode",
         "version": "4.1.0",
-        "category": "utilities"
+        "category": "IDE"
       },
       "helper_mssql": {
         "name": "Helper MSSql",
         "description": "MSSql codio helper",
         "script": "helper_mssql",
         "version": "1.0.0",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "helper_mysql": {
         "name": "Helper MySql",
         "description": "MySql codio helper",
         "script": "helper_mysql",
         "version": "1.0.0",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "helper_postgres": {
         "name": "Helper PostgreSQL",
         "description": "PostgreSQL codio helper",
         "script": "helper_postgres",
         "version": "1.0.0",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "pencilcode": {
         "name": "PencilCode",
         "description": "Pencilcode server on Codio. Runs on 8008 port.",
         "script": "pencilcode",
         "version": "1.0.0",
-        "category": "utilities"
+        "category": "Utilities"
       },
       "r-studio": {
         "name": "R Studio",
