@@ -9,6 +9,7 @@
     - apt: name=openbox state=present
     - apt: name=tigervnc-standalone-server state=present
     - apt: name=xterm state=absent
+    - apt: name=python3-pip state=present
 
 # remove old services
     - name: Systemd for openbox
