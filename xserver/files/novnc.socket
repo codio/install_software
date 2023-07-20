@@ -1,0 +1,9 @@
+[Unit]
+Description=Go vnc socket
+
+[Socket]
+ListenStream=3050
+NoDelay=true
+
+[Install]
+WantedBy = sockets.target
