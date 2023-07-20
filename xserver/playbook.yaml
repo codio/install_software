@@ -31,9 +31,10 @@
         path: /etc/systemd/system/novnc-3000.service 
         state: absent
 
-    - file: 
-      path: /etc/init/novnc.conf 
-      state: absent
+    - name: Remove upstart
+      file: 
+        path: /etc/init/novnc.conf 
+        state: absent
 # end
 
     - name: Systemd service for govnc
