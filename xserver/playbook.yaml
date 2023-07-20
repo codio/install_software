@@ -3,51 +3,64 @@
   become: yes
   become_user: root
   tasks:
-    - apt: update_cache=yes
-    - apt: name=xvfb state=present
-    - apt: name=x11vnc state=absent
-    - apt: name=openbox state=present
-    - apt: name=tigervnc-standalone-server state=present
-    - apt: name=xterm state=absent
-    - apt: name=python3-pip state=present
+    - name: Install dependencies
+      apt: 
+        update_cache: yes
+        name: 
+          - xvfb
+          - x11vnc
+          - openbox
+          - tigervnc-standalone-server
+          - xterm
+          - python3-pip
+        state: present
 
 # remove old services
     - name: Systemd for openbox
-      file: path=/etc/systemd/system/openbox.service state=absent
+      file: 
+        path: /etc/systemd/system/openbox.service 
+        state: absent
 
     - name: Systemd for x11vnc
-      file: path=/etc/systemd/system/x11vnc.service state=absent
+      file: 
+        path: /etc/systemd/system/x11vnc.service 
+        state: absent
 
     - name: Systemd for novnc-3000
-      file: path=/etc/systemd/system/novnc-3000.service state=absent
+      file: 
+        path: /etc/systemd/system/novnc-3000.service 
+        state: absent
 
-    - file: path=/etc/init/novnc.conf state=absent
+    - file: 
+      path: /etc/init/novnc.conf 
+      state: absent
 # end
 
     - name: Systemd service for govnc
-      copy: 
+      copy:
         src: novnc.service 
         dest: /etc/systemd/system/novnc.service
 
     - name: Systemd socket for govnc
-      copy: 
+      copy:
         src: novnc.socket 
         dest: /etc/systemd/system/novnc.socket
 
     - name: Systemd for vnc
-      copy: 
+      copy:
         src: vnc.service 
         dest: /etc/systemd/system/vnc.service
 
-    - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
-    - copy: src=rc.xml dest=/etc/xdg/openbox/rc.xml
+    - copy: 
+        src: codio-xserver.sh 
+        dest: /etc/profile.d/codio-xserver.sh
+    - copy:
+        src: rc.xml 
+        dest: /etc/xdg/openbox/rc.xml
 
+# Ansible bug, old versions not aware of sockets
     - name: Govnc enabled
-      systemd:
-        enabled: yes
-        daemon_reload: yes
-        name: novnc.socket
-      ignore_errors: yes
+      shell: systemctl enable --now novnc.socket
 
     - name: Install commentjson
       pip:
