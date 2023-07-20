@@ -8,6 +8,7 @@ RestartSec=5s
 [Unit]
 Description = NO VNC
 After = vnc.service
+Requires = vnc.service
 
 [Install]
 WantedBy = multi-user.target
