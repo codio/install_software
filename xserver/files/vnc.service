@@ -5,7 +5,7 @@ Type=forking
 Environment="DISPLAY=:0"
 Environment="XAUTHORITY=/tmp/codio.auth"
 Environment="XDG_RUNTIME_DIR=/tmp/runtime-codio"
-ExecStart = /usr/bin/vncserver :0  -verbose -SecurityTypes None -auth /tmp/codio.auth -xstartup /usr/bin/openbox
+ExecStart = /usr/bin/vncserver :0  -verbose -SecurityTypes None -auth /tmp/codio.auth -xstartup /usr/bin/openbox-session
 ExecStop = /usr/bin/vncserver -kill :*
 ExecStartPre=-/usr/bin/vncserver -kill :* 
 Restart=always
