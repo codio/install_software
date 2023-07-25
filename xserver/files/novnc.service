@@ -1,14 +1,14 @@
 [Service]
 User = root
 Group = root
-WorkingDirectory = /opt/novnc/noVNC-master/
-ExecStart = /opt/novnc/noVNC-master/utils/novnc_proxy --vnc localhost:5900 --heartbeat 10 --listen 3050
+ExecStart = /usr/share/codio-tools/govnc
 Restart=always
 RestartSec=5s
 
 [Unit]
 Description = NO VNC
 After = vnc.service
+Requires = vnc.service
 
 [Install]
 WantedBy = multi-user.target

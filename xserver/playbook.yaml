@@ -3,74 +3,86 @@
   become: yes
   become_user: root
   tasks:
-    - apt: update_cache=yes
-    - apt: name=xvfb state=present
-    - apt: name=x11vnc state=absent
-    - apt: name=openbox state=present
-    - apt: name=tigervnc-standalone-server state=present
-    - apt: name=python3-pip state=present
-    - apt: name=python3-numpy state=present
-    - apt: name=xterm state=absent
+    - name: Install dependencies
+      apt: 
+        update_cache: yes
+        name: 
+          - xvfb
+          - x11vnc
+          - openbox
+          - tigervnc-standalone-server
+          - jq
+        state: present
 
-    - stat: path=/opt/novnc/noVNC-master
-      register: novnc
-
-    - name: Creates novnc directory
-      file: path=/opt/novnc state=directory
-
-    - name: Download novnc
-      shell: curl -fsSL https://github.com/novnc/noVNC/archive/refs/tags/v1.4.0-beta.tar.gz | tar zxf - -C /opt/novnc && rm -rf /opt/novnc/noVNC-master ; mv /opt/novnc/noVNC-1.4.0-beta /opt/novnc/noVNC-master
+    # lagacy to remove xterm to prevent terminal access
+    - name: Uninstall xterm
+      apt: 
+        name: xterm
+        state: absent
 
 # remove old services
     - name: Systemd for openbox
-      file: path=/etc/systemd/system/openbox.service state=absent
+      file: 
+        path: /etc/systemd/system/openbox.service 
+        state: absent
 
     - name: Systemd for x11vnc
-      file: path=/etc/systemd/system/x11vnc.service state=absent
+      file: 
+        path: /etc/systemd/system/x11vnc.service 
+        state: absent
 
     - name: Systemd for novnc-3000
-      file: path=/etc/systemd/system/novnc-3000.service state=absent
+      file: 
+        path: /etc/systemd/system/novnc-3000.service 
+        state: absent
 
-    - file: path=/etc/init/novnc.conf state=absent
+    - name: Remove upstart
+      file: 
+        path: /etc/init/novnc.conf 
+        state: absent
 # end
 
-    - name: Systemd for novnc
-      copy: src=novnc.service dest=/etc/systemd/system/novnc.service
+    - name: Systemd service for govnc
+      copy:
+        src: novnc.service 
+        dest: /etc/systemd/system/novnc.service
+
+    - name: Systemd socket for govnc
+      copy:
+        src: novnc.socket 
+        dest: /etc/systemd/system/novnc.socket
 
     - name: Systemd for vnc
-      copy: src=vnc.service dest=/etc/systemd/system/vnc.service
+      copy:
+        src: vnc.service 
+        dest: /etc/systemd/system/vnc.service
 
-    - copy: src=codio-xserver.sh dest=/etc/profile.d/codio-xserver.sh
-    - copy: src=rc.xml dest=/etc/xdg/openbox/rc.xml
-    - copy: src=index.html dest=/opt/novnc/noVNC-master/index.html
+    - copy: 
+        src: codio-xserver.sh 
+        dest: /etc/profile.d/codio-xserver.sh
+    - copy:
+        src: rc.xml 
+        dest: /etc/xdg/openbox/rc.xml
 
-    - name: vnc restarted
-      systemd:
-        enabled: yes
-        state: restarted
-        daemon_reload: yes
-        name: vnc
-      ignore_errors: yes
-    - name: novnc restarted
-      systemd:
-        enabled: yes
-        state: restarted
-        daemon_reload: yes
-        name: novnc
-      ignore_errors: yes
+# Ansible bug, old versions not aware of sockets
+    - name: Govnc enabled
+      shell: systemctl enable --now novnc.socket
 
-    - name: Install commentjson
-      pip:
-        name: commentjson
-        executable: pip3
-        state: present
-    - name: Put Virtual Desktop to the preview targets
-      add_preview_to_codio:
-    - name: Restore .codio permissions
-      file:
-        path: /home/codio/workspace/.codio
-        owner: codio
-        group: codio
+    - name: Add Virtual Desktop to Preview menu
+      become_user: codio
+      shell: |
+        CODIO_FILE=$(cat .codio 2>/dev/null || echo "{}")
+
+        NO_COMMENTS=$(echo "${CODIO_FILE}" | sed -E -e "s:(\s+(//|#)|^\s*(//|#)).*$::; /^$/d")
+        NEW_FILE=$(echo "${NO_COMMENTS}" | jq  '. * {"preview": {"Virtual Desktop": "https://{%raw%}{{domain3050}}{%endraw%}/"}}')
+
+        if [ $? -eq 0 ]
+        then
+          (echo "${NEW_FILE}" > .codio)
+        fi
+      args:
+        executable: /bin/bash
+        chdir: /home/codio/workspace
 
     - name: Restart Instructions
       debug:
