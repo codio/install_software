@@ -69,7 +69,10 @@
       shell: systemctl enable --now novnc.socket
 
     - name: Add Virtual Desktop to Preview menu
-      shell: cat .codio | sed -E -e 's:(\s+(//|#)|^\s*(//|#)).*$::; /^$/d' | jq  '. * {"preview": {"Virtual Desktop": "https://{{domain3050}}/"}}'
+      become_user: codio
+      shell: 
+        cmd: 'cat .codio | sed -E -e "s:(\s+(//|#)|^\s*(//|#)).*$::; /^$/d" | jq  ". * {\"preview\": {\"Virtual Desktop\": \"https://{%raw%}{{domain3050}}{%endraw%}/\"}}" > .codio_tmp ; mv .codio_tmp .codio ; true'
+        chdir: /home/codio/workspace
 
     - name: Restart Instructions
       debug:
