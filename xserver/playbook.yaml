@@ -11,9 +11,14 @@
           - x11vnc
           - openbox
           - tigervnc-standalone-server
-          - xterm
-          - python3-pip
+          - jq
         state: present
+
+    # lagacy to remove xterm to prevent terminal access
+    - name: Uninstall xterm
+      apt: 
+        name: xterm
+        state: absent
 
 # remove old services
     - name: Systemd for openbox
@@ -63,20 +68,8 @@
     - name: Govnc enabled
       shell: systemctl enable --now novnc.socket
 
-    - name: Install commentjson
-      pip:
-        name: commentjson
-        executable: pip3
-        state: present
-
-    - name: Put Virtual Desktop to the preview targets
-      add_preview_to_codio:
-
-    - name: Restore .codio permissions
-      file:
-        path: /home/codio/workspace/.codio
-        owner: codio
-        group: codio
+    - name: Add Virtual Desktop to Preview menu
+      shell: cat .codio | sed -E -e 's:(\s+(//|#)|^\s*(//|#)).*$::; /^$/d' | jq  '. * {"preview": {"Virtual Desktop": "https://{{domain3050}}/"}}'
 
     - name: Restart Instructions
       debug:
