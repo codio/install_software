@@ -76,14 +76,14 @@
         NO_COMMENTS=$(echo "${CODIO_FILE}" | sed -E -e "s:(\s+(//|#)|^\s*(//|#)).*$::; /^$/d")
         NEW_FILE=$(echo "${NO_COMMENTS}" | jq  '. * {"preview": {"Virtual Desktop": "https://{%raw%}{{domain3050}}{%endraw%}/"}}')
 
-        if [ $? -eq 0 ] 
+        if [ $? -eq 0 ]
         then
           (echo "${NEW_FILE}" > .codio)
         fi
       args:
         executable: /bin/bash
         chdir: /home/codio/workspace
-        
+
     - name: Restart Instructions
       debug:
         msg: 
