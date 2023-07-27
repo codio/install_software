@@ -7,29 +7,64 @@
       command: java -version
       register: java_result
       ignore_errors: True
-
-    - apt_repository:
-        repo: 'ppa:openjdk-r/ppa'
-        update_cache: yes
-      when: java_result is failed
-    - apt: name=openjdk-8-jdk state=latest
-      when: java_result is failed
-    - name: Update alternatives
-      become: yes
-      shell: update-java-alternatives -s java-1.8.0-openjdk-amd64
-      when: java_result is failed
-
-    - file: path=/usr/share/org.eclipse.jdt.ls state=directory
-
-    - unarchive:
-        src: https://s3.amazonaws.com/codio-resources/org.eclipse.jdt.ls.tar.gz
-        dest: /usr/share/org.eclipse.jdt.ls
-        remote_src: True
-        creates: /usr/share/org.eclipse.jdt.ls/content.xml
+    
+    - name: Fetch Java version
+      shell: java -version 2>&1 | head -1 | cut -d'"' -f2 | sed '/^1\./s///' | cut -d'.' -f1
+      register: java_version
 
     - file:
-        path: /usr/share/org.eclipse.jdt.ls
+        path: /usr/share/org.eclipse.jdt.ls.0.57.0
         state: directory
         recurse: True
         owner: codio
         group: codio
+      when: (java_result is failed) or (java_version.stdout is version("11", "<"))
+
+    - name: unarchive jdt ls
+      unarchive:
+        src: https://s3.amazonaws.com/codio-resources/jdt-language-server-0.57.0-202006172108.tar.gz
+        dest: /usr/share/org.eclipse.jdt.ls.0.57.0
+        remote_src: True
+        creates: /usr/share/org.eclipse.jdt.ls.0.57.0/content.xml
+        owner: codio
+        group: codio
+        extra_opts: ["--no-same-owner"]
+      when: (java_result is failed) or (java_version.stdout is version("11", "<"))
+
+    - file:
+        path: /usr/share/org.eclipse.jdt.ls.1.12.0
+        state: directory
+        recurse: True
+        owner: codio
+        group: codio
+      when: (java_result is failed) or (java_version.stdout is version("17", "<") and java_version.stdout is version("11", ">="))
+
+    - name: unarchive jdt ls
+      unarchive:
+        src: https://s3.amazonaws.com/codio-resources/jdt-language-server-1.12.0-202206011637.tar.gz
+        dest: /usr/share/org.eclipse.jdt.ls.1.12.0
+        remote_src: True
+        creates: /usr/share/org.eclipse.jdt.ls.1.12.0/content.xml
+        owner: codio
+        group: codio
+        extra_opts: ["--no-same-owner"]
+      when: (java_result is failed) or (java_version.stdout is version("17", "<") and java_version.stdout is version("11", ">="))
+
+    - file:
+        path: /usr/share/org.eclipse.jdt.ls.1.25.0
+        state: directory
+        recurse: True
+        owner: codio
+        group: codio
+      when: (java_result is failed) or (java_version.stdout is version("17", ">="))
+
+    - name: unarchive jdt ls
+      unarchive:
+        src: https://s3.amazonaws.com/codio-resources/jdt-language-server-1.25.0-202306291518.tar.gz
+        dest: /usr/share/org.eclipse.jdt.ls.1.25.0
+        remote_src: True
+        creates: /usr/share/org.eclipse.jdt.ls.1.25.0/content.xml
+        owner: codio
+        group: codio
+        extra_opts: ["--no-same-owner"]
+      when: (java_result is failed) or (java_version.stdout is version("17", ">="))
