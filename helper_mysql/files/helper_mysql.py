@@ -9,6 +9,9 @@ import csv
 import mysql.connector
 from mysql.connector import Error
 
+def is_python_2():
+  return sys.version_info[0] == 2
+
 def parse_args():
   parser = argparse.ArgumentParser()
   parser.add_argument('--db_host', required=True)
@@ -46,7 +49,7 @@ def execute_query(connection, query):
 def main():
   args = parse_args()
 
-  query = raw_input()
+  query = raw_input() if is_python_2() else input()
 
   connection = create_connection(
     args.db_host,
