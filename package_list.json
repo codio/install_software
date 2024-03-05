@@ -172,9 +172,9 @@
       },
       "r-studio": {
         "name": "R Studio",
-        "description": "R is an open-source programming language and free environment that specializes in statistical computing and graphical representation.",
+        "description": "R is an open-source programming language and free environment that specializes in statistical computing and graphical representation. (Ubuntu 22.04 required)",
         "script": "r-studio",
-        "version": "2022.07.1",
+        "version": "2023.12.1",
         "category": "IDE"
       }
 
