@@ -3,18 +3,24 @@
   become: yes
   become_user: root
   tasks:
-    - apt: update_cache=yes
-    - apt: name=build-essential state=present
-    - apt: name=software-properties-common state=present
-    - apt: name=dirmngr state=present
 
-    - name: cpan apt key
-      get_url:
+    - name: Install essential packages
+      ansible.builtin.apt:
+        name:
+          - build-essential
+          - software-properties-common
+          - dirmngr
+        update_cache: true
+
+    - name: Cpan apt key
+      ansible.builtin.get_url:
         url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
         dest: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+        mode: "0644"
+
 
     - name: Add R repository into sources list
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/cran_ubuntu_key.asc] https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/"
         state: present
 
@@ -22,35 +28,50 @@
       ansible.builtin.apt_repository:
         repo: ppa:c2d4u.team/c2d4u4.0+
 
-    - apt: update_cache=yes
-    - apt: name=r-base state=present
+    - name: Install R Base
+      ansible.builtin.apt:
+        name: r-base
+        update_cache: true
+
     - name: Install r studio .deb package
-      apt:
+      ansible.builtin.apt:
         deb: https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.12.1-402-amd64.deb
 
-    - name: Systemd config
-      copy: src=rstudio-server-codio.service dest=/etc/systemd/system/rstudio-server-codio.service
-    - name: rstudio config config
-      copy: src=rserver.conf dest=/etc/rstudio/rserver.conf
-    - name: change permission
-      file:
-        path: /var/lib/rstudio-server/rstudio-os.sqlite
+    - name: Create systemd Rstudio config
+      ansible.builtin.copy:
+        src: rstudio-server-codio.service
+        dest: /etc/systemd/system/rstudio-server-codio.service
+        mode: "0644"
+
+
+    - name: Copy Rstudio config
+      ansible.builtin.copy:
+        src: rserver.conf
+        dest: /etc/rstudio/rserver.conf
+        mode: "0644"
+
+    - name: Change permission for databse
+      ansible.builtin.file:
+        recurse: true
+        path: /var/lib/rstudio-server/
         owner: codio
         group: codio
 
-    - name: rstudio original disabled
-      systemd:
-        enabled: no
+    - name: Disable original Rstudio
+      ansible.builtin.systemd:
+        enabled: false
         state: stopped
-        daemon_reload: yes
+        daemon_reload: true
         name: rstudio-server
-    - name: rstudio restarted
-      systemd:
-        enabled: yes
+
+    - name: Rstudio ensure restarted
+      ansible.builtin.systemd:
+        enabled: true
         state: restarted
-        daemon_reload: yes
+        daemon_reload: true
         name: rstudio-server-codio
+
     - name: Restart Instructions
-      debug:
+      ansible.builtin.debug:
         msg:
           - "INFO: Access to the r studio uses 8787 port, use {%raw%}{{domain8787}}{%endraw%}!"
