@@ -15,15 +15,19 @@
 
     - name: Add R repository into sources list
       apt_repository:
-        repo: deb https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/
+        repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/cran_ubuntu_key.asc] https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/"
         state: present
+
+    - name: Add CRAN Packages
+      ansible.builtin.apt_repository:
+        repo: ppa:c2d4u.team/c2d4u4.0+
 
     - apt: update_cache=yes
     - apt: name=r-base state=present
     - name: Install r studio .deb package
       apt:
-        deb: https://download2.rstudio.org/server/bionic/amd64/rstudio-server-2022.07.1-554-amd64.deb
-    
+        deb: https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2023.12.1-402-amd64.deb
+
     - name: Systemd config
       copy: src=rstudio-server-codio.service dest=/etc/systemd/system/rstudio-server-codio.service
     - name: rstudio config config
@@ -48,5 +52,5 @@
         name: rstudio-server-codio
     - name: Restart Instructions
       debug:
-        msg: 
-          - "INFO: Access to the r studio uses 8787 port, use {%raw%}{{domain8787}}{%endraw%}!" 
+        msg:
+          - "INFO: Access to the r studio uses 8787 port, use {%raw%}{{domain8787}}{%endraw%}!"
