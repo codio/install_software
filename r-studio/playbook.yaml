@@ -3,6 +3,10 @@
   become: yes
   become_user: root
   tasks:
+    - name: Fail if not running on Ubuntu 22.04
+      ansible.builtin.fail:
+        msg: "These tasks should only be run on Ubuntu 22.04"
+      when: ansible_distribution != "Ubuntu" or ansible_distribution_version != "22.04"
 
     - name: Install essential packages
       ansible.builtin.apt:
