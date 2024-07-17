@@ -5,7 +5,7 @@
   tasks:
     - name: Install vscode
       apt:
-        deb: https://global.codio.com/utils/code-server_4.22.0_amd64.deb
+        deb: https://global.codio.com/utils/code-server_4.91.1_amd64.deb
 
     - name: Create a systemd override
       file:
