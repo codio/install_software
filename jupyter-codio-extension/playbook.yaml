@@ -1,5 +1,7 @@
 ---
 - hosts: 127.0.0.1
+  become: yes
+  become_user: root
   tasks:
 
     - name: "Install Jupyter Codio extension"
@@ -8,3 +10,9 @@
       become_user: codio
       become_method: su
       become_flags: -l
+
+    - name: "Restart Jupyter"
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: jupyter.service
