@@ -176,6 +176,13 @@
         "script": "r-studio",
         "version": "2023.12.1",
         "category": "IDE"
+      },
+      "jupyter-codio-extension": {
+        "name": "Jupyter Codio extension",
+        "description": "Extension to communicate between jupyter notebook, jupyter-lab and codio.",
+        "script": "jupyter-codio-extension",
+        "version": "1.0.0",
+        "category": "IDE"
       }
 
    }
