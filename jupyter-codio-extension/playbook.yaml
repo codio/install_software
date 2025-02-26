@@ -5,7 +5,7 @@
   tasks:
 
     - name: "Install Jupyter Codio extension"
-      command: /usr/share/codio-tools/jupyter-codio-extension/scripts/installer/jupyter-codio-extension-installer
+      command: /usr/share/codio/jupyter-codio-extension/scripts/installer/jupyter-codio-extension-installer
       become: yes
       become_user: codio
       become_method: su
