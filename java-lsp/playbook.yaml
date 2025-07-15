@@ -50,25 +50,6 @@
         extra_opts: ["--no-same-owner"]
       when: (java_result is failed) or (java_version.stdout is version("17", "<") and java_version.stdout is version("11", ">="))
 
-    # - file:
-    #     path: /usr/share/org.eclipse.jdt.ls.1.25.0
-    #     state: directory
-    #     recurse: True
-    #     owner: codio
-    #     group: codio
-    #   when: (java_result is failed) or (java_version.stdout is version("17", ">="))
-
-    # - name: unarchive jdt ls
-    #   unarchive:
-    #     src: https://s3.amazonaws.com/codio-resources/jdt-language-server-1.25.0-202306291518.tar.gz
-    #     dest: /usr/share/org.eclipse.jdt.ls.1.25.0
-    #     remote_src: True
-    #     creates: /usr/share/org.eclipse.jdt.ls.1.25.0/content.xml
-    #     owner: codio
-    #     group: codio
-    #     extra_opts: ["--no-same-owner"]
-    #   when: (java_result is failed) or (java_version.stdout is version("17", ">="))
-
     - file:
         path: /usr/share/org.eclipse.jdt.ls.1.43.0
         state: directory
