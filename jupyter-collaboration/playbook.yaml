@@ -1,0 +1,31 @@
+---
+- hosts: 127.0.0.1
+  become: yes
+  become_user: root
+  tasks:
+
+    - name: Install jupyter-collaboration
+      become: yes
+      pip:
+        name: jupyter-collaboration
+        executable: pip3
+        state: present
+
+    - name: Remove jupyter-server-ydoc
+    - name: "Install Jupyter Notebook Codio extension"
+      command: pip3 uninstall jupyter-server-ydoc
+      become: yes
+
+    - name: Install jupyter-server-ydoc-codio
+      become: yes
+      pip:
+        extra_args: -i https://test.pypi.org/simple/
+        name: jupyter-server-ydoc-codio
+        executable: pip3
+        state: present
+
+    - name: "Restart Jupyter"
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: jupyter.service
