@@ -12,8 +12,11 @@
         state: present
 
     - name: Remove jupyter-server-ydoc
-      command: pip3 uninstall jupyter-server-ydoc
       become: yes
+      pip:
+        name: jupyter-server-ydoc
+        executable: pip3
+        state: absent
 
     - name: Install jupyter-server-ydoc-codio
       become: yes
