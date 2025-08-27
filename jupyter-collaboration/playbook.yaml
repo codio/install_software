@@ -5,21 +5,18 @@
   tasks:
 
     - name: Install jupyter-collaboration
-      become: yes
       pip:
         name: jupyter-collaboration
         executable: pip3
         state: present
 
     - name: Remove jupyter-server-ydoc
-      become: yes
       pip:
         name: jupyter-server-ydoc
         executable: pip3
         state: absent
 
     - name: Install jupyter-server-ydoc-codio
-      become: yes
       pip:
         extra_args: -i https://test.pypi.org/simple/
         name: jupyter-server-ydoc-codio
@@ -27,6 +24,7 @@
         state: present
 
     - name: "Restart Jupyter"
+      become: yes
       systemd:
         state: restarted
         daemon_reload: yes
