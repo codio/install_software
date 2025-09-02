@@ -5,41 +5,41 @@
 
     - apt: update_cache=yes
 
-    - name: Install Pip
-      apt: name=python3-pip state=present
-
     - name: Installing notebook and nbgrader
       pip:
         name: jupyter-collaboration
-        executable: pip3
-        extra_args: --user
-      become: true
-      become_method: su
+      become: yes
       become_user: codio
-      become_flags: '-s /bin/sh'
+      become_method: su
+      become_flags: -l
+      register: aptout
 
+    - debug: var=aptout
 
     - name: Remove jupyter-server-ydoc
       pip:
         name: jupyter-server-ydoc
-        executable: pip3
         state: absent
-      become: true
-      become_method: su
+      become: yes
       become_user: codio
-      become_flags: '-s /bin/sh'
+      become_method: su
+      become_flags: -l
+      register: aptout1
+
+    - debug: var=aptout1
 
     - name: Install jupyter-server-ydoc-codio
       pip:
         extra_args: -i https://test.pypi.org/simple/
         name: jupyter-server-ydoc-codio
-        executable: pip3
         state: present
-        extra_args: --user
-      become: true
-      become_method: su
+      become: yes
       become_user: codio
-      become_flags: '-s /bin/sh'
+      become_method: su
+      become_flags: -l
+      register: aptout2
+
+    - debug: var=aptout2
 
     - name: jupyter restarted
       systemd:
