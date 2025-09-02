@@ -1,20 +1,33 @@
 ---
 - hosts: 127.0.0.1
-  become: yes
-  become_user: codio
+  become: true
   tasks:
 
-    - name: Install jupyter-collaboration
+    - apt: update_cache=yes
+
+    - name: Install Pip
+      apt: name=python3-pip state=present
+
+    - name: Installing notebook and nbgrader
       pip:
         name: jupyter-collaboration
         executable: pip3
-        state: present
+        extra_args: --user
+      become: true
+      become_method: su
+      become_user: codio
+      become_flags: '-s /bin/sh'
+
 
     - name: Remove jupyter-server-ydoc
       pip:
         name: jupyter-server-ydoc
         executable: pip3
         state: absent
+      become: true
+      become_method: su
+      become_user: codio
+      become_flags: '-s /bin/sh'
 
     - name: Install jupyter-server-ydoc-codio
       pip:
@@ -22,10 +35,16 @@
         name: jupyter-server-ydoc-codio
         executable: pip3
         state: present
+        extra_args: --user
+      become: true
+      become_method: su
+      become_user: codio
+      become_flags: '-s /bin/sh'
 
-    - name: "Restart Jupyter"
-      become: yes
+    - name: jupyter restarted
       systemd:
+        enabled: yes
         state: restarted
         daemon_reload: yes
-        name: jupyter.service
+        name: jupyter
+      when: ansible_distribution_version >= "16.04"
