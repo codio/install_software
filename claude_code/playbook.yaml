@@ -1,0 +1,73 @@
+---
+- hosts: 127.0.0.1
+  become: true
+  become_user: root
+  tasks:
+    - name: Install jq
+      apt:
+        pkg:
+          - jq
+        state: present
+        update_cache: true
+
+    - name: Install Claude Code
+      become_user: codio
+      become: true
+      shell: curl -fsSL https://claude.ai/install.sh | bash
+
+    - name: Add to path
+      copy:
+        dest: /etc/profile.d/local.sh
+        content: |
+          export PATH="$HOME/.local/bin:$PATH"
+        owner: root
+        group: root
+        mode: '0755'
+    
+    - name: Claude Code should ignore env keys
+      copy:
+        dest: /home/codio/.claude/99-ignore-claude-key.sh
+        src: block_claude_key.sh
+        owner: codio
+        group: codio
+        mode: '0755'
+
+    - name: Add ignore to bash rc
+      lineinfile:
+        path: /home/codio/.bashrc
+        line: '/home/codio/.claude/99-ignore-claude-key.sh'
+        create: yes
+        backup: yes
+        insertafter: EOF
+        state: present
+
+    - name: Ensure Claude directory exists
+      file:
+        path: /home/codio/.claude
+        state: directory
+        mode: '0755'
+
+    - name: Key Helper
+      copy:
+        dest: /home/codio/.claude/anthropic_key_helper.sh
+        owner: codio
+        group: codio
+        mode: '0755'
+        content: |
+          echo ${CUSTOM_CLAUDE_ANTHROPIC_API_KEY}
+
+    - name: Copy Claude settings
+      copy:
+        dest: /home/codio/.claude/settings.json
+        owner: codio
+        group: codio
+        mode: '0644'
+        src: settings.json
+
+    - name: Copy Claude state
+      copy:
+        dest: /home/codio/.claude.json
+        owner: codio
+        group: codio
+        mode: '0644'
+        src: claude.json

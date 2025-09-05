@@ -16,6 +16,13 @@
         "version": "2.4.7",
         "category": "Web Dev"
       },
+      "claude_code": {
+        "name": "Claude Code",
+        "description": "nthropic’s agentic coding tool that lives in your terminal and helps you turn ideas into code faster than ever before.",
+        "script": "claude_code",
+        "version": "latest",
+        "category": "Utilities"
+      },
       "python2": {
         "name": "Python2 tools set",
         "description": "Set of tools for python2 development.",
