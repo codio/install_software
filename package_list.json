@@ -18,7 +18,7 @@
       },
       "claude_code": {
         "name": "Claude Code",
-        "description": "nthropic’s agentic coding tool that lives in your terminal and helps you turn ideas into code faster than ever before.",
+        "description": "Anthropic’s agentic coding tool that lives in your terminal and helps you turn ideas into code faster than ever before.",
         "script": "claude_code",
         "version": "latest",
         "category": "Utilities"
