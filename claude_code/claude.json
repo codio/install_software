@@ -2,7 +2,7 @@
   "numStartups": 1,
   "installMethod": "native",
   "autoUpdates": true,
-  "customApiResponses": {
+  "customApiKeyResponses": {
     "approved": [
     ],
     "rejected": []

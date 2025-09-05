@@ -54,7 +54,7 @@
         group: codio
         mode: '0755'
         content: |
-          echo ${CUSTOM_CLAUDE_ANTHROPIC_API_KEY}
+          echo ${ANTHROPIC_API_KEY}
 
     - name: Copy Claude settings
       copy:
