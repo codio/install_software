@@ -71,3 +71,8 @@
         group: codio
         mode: '0644'
         src: claude.json
+
+    - name: Open new terminal tab
+          debug:
+            msg: 
+              - "Reopen terminal tab to apply the changes"
