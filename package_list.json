@@ -38,17 +38,38 @@
         "category": "Languages"
       },
       "openjdk8": {
-        "name": "Java 8 (OpenJDK)",
+        "name": "Java 8 (Eclipse Temurin OpenJDK)",
         "description": "Java is a general purpose, high-level programming language.",
-        "script": "openjdk",
+        "script": "openjdk-8",
         "version": "8",
         "category": "Languages"
       },
       "openjdk11": {
-        "name": "Java 11 (OpenJDK zulu)",
+        "name": "Java 11 (Eclipse Temurin OpenJDK)",
         "description": "Java is a general purpose, high-level programming language.",
-        "script": "openjdk-zulu-11",
+        "script": "openjdk-11",
         "version": "11",
+        "category": "Languages"
+      },
+      "openjdk17": {
+        "name": "Java 17 (Eclipse Temurin OpenJDK)",
+        "description": "Java is a general purpose, high-level programming language.",
+        "script": "openjdk-17",
+        "version": "17",
+        "category": "Languages"
+      },
+      "openjdk21": {
+        "name": "Java 21 (Eclipse Temurin OpenJDK)",
+        "description": "Java is a general purpose, high-level programming language.",
+        "script": "openjdk-21",
+        "version": "21",
+        "category": "Languages"
+      },
+      "openjdk25": {
+        "name": "Java 25 (Eclipse Temurin OpenJDK)",
+        "description": "Java is a general purpose, high-level programming language.",
+        "script": "openjdk-25",
+        "version": "25",
         "category": "Languages"
       },
       "nodejs": {
