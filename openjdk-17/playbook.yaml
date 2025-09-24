@@ -11,6 +11,7 @@
     - name: Ensure Eclipse Adoptium apt repository is present
       apt_repository:
         repo: 'deb https://packages.adoptium.net/artifactory/deb {{ ansible_distribution_release }} main'
+        filename: openjdk_adoptium
         update_cache: yes
         state: present
 
