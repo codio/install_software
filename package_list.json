@@ -211,6 +211,13 @@
         "script": "jupyter-codio-extension",
         "version": "1.0.0",
         "category": "IDE"
+      },
+      "jupyter-collaboration": {
+        "name": "Jupyter Collaboration extension",
+        "description": "Extension to save history of edits in project.",
+        "script": "jupyter-collaboration",
+        "version": "1.0.0",
+        "category": "Utilities"
       }
 
    }

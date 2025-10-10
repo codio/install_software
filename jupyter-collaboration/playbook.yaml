@@ -1,0 +1,50 @@
+---
+- hosts: 127.0.0.1
+  become: true
+  tasks:
+
+    - apt: update_cache=yes
+
+    - name: Installing notebook and nbgrader
+      pip:
+        name: jupyter-collaboration
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      register: aptout
+
+    - debug: var=aptout
+
+    - name: Remove jupyter-server-ydoc
+      pip:
+        name: jupyter-server-ydoc
+        state: absent
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      register: aptout1
+
+    - debug: var=aptout1
+
+    - name: Install jupyter-server-ydoc-codio
+      pip:
+        extra_args: -i https://test.pypi.org/simple/
+        name: jupyter-server-ydoc-codio
+        state: present
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      register: aptout2
+
+    - debug: var=aptout2
+
+    - name: jupyter restarted
+      systemd:
+        enabled: yes
+        state: restarted
+        daemon_reload: yes
+        name: jupyter
+      when: ansible_distribution_version >= "16.04"
