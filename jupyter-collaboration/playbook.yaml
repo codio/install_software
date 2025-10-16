@@ -41,6 +41,32 @@
 
     - debug: var=aptout2
 
+    - name: Remove jupyter-docprovider
+      pip:
+        name: jupyter-docprovider
+        state: absent
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      register: aptoutdocprovider
+
+    - debug: var=aptoutdocprovider
+
+    - name: Install jupyter-docprovider-codio
+      pip:
+        extra_args: -i https://test.pypi.org/simple/
+        name: jupyter-docprovider-codio
+        state: present
+        version: 2.1.1.dev2
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      register: aptoutdocprovider2
+
+    - debug: var=aptoutdocprovider2
+
     - name: jupyter restarted
       systemd:
         enabled: yes
