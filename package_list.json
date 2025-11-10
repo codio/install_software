@@ -211,7 +211,11 @@
         "script": "jupyter-codio-extension",
         "version": "1.0.0",
         "category": "IDE"
+      },
+      "mysql_postman_stack": {
+        "name": "MySQL with Postman",
+        "description": "A stack that includes MySQL and the Postman desktop app for API testing",
+        "scripts": ["mysql", "install_postman.sh"]
       }
-
    }
 }
