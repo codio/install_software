@@ -58,7 +58,7 @@
         extra_args: -i https://test.pypi.org/simple/
         name: jupyter-docprovider-codio
         state: present
-        version: 2.1.1.dev2
+        version: 2.1.1.dev22
       become: yes
       become_user: codio
       become_method: su
