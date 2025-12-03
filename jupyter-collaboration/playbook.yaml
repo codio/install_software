@@ -30,9 +30,9 @@
 
     - name: Install jupyter-server-ydoc-codio
       pip:
-        extra_args: -i https://test.pypi.org/simple/
         name: jupyter-server-ydoc-codio
         state: present
+        version: 2.1.1
       become: yes
       become_user: codio
       become_method: su
@@ -55,10 +55,9 @@
 
     - name: Install jupyter-docprovider-codio
       pip:
-        extra_args: -i https://test.pypi.org/simple/
         name: jupyter-docprovider-codio
         state: present
-        version: 2.1.1.dev24
+        version: 2.1.1
       become: yes
       become_user: codio
       become_method: su
