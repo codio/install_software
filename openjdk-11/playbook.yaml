@@ -4,7 +4,7 @@
   become_user: root
   tasks:
     - name: Eclipse Adoptium key
-      ansible.builtin.get_url:
+      get_url:
         url: https://packages.adoptium.net/artifactory/api/gpg/key/public
         dest: /etc/apt/keyrings/adoptium.asc
         mode: "0644"
