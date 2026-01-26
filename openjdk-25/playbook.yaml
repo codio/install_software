@@ -3,6 +3,12 @@
   become: true
   become_user: root
   tasks:
+    - name: Create a directory for keyrings
+      file:
+        path: /etc/apt/keyrings/
+        state: directory
+        mode: '0755'
+
     - name: Eclipse Adoptium key
       get_url:
         url: https://packages.adoptium.net/artifactory/api/gpg/key/public
