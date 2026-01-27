@@ -4,7 +4,7 @@
   become_user: root
   tasks:
     - name: Fail if not running on Ubuntu 22.04
-      ansible.builtin.fail:
+      fail:
         msg: "These tasks should only be run on Ubuntu 22.04"
       when: ansible_distribution != "Ubuntu" or ansible_distribution_version != "22.04"
 
@@ -19,13 +19,13 @@
     - name: Cpan apt key
       ansible.builtin.get_url:
         url: https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc
-        dest: /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc
+        dest: /etc/apt/keyrings/cran_ubuntu_key.asc
         mode: "0644"
 
 
     - name: Add R repository into sources list
       ansible.builtin.apt_repository:
-        repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/cran_ubuntu_key.asc] https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/"
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/cran_ubuntu_key.asc] https://cloud.r-project.org/bin/linux/ubuntu {{ ansible_distribution_release }}-cran40/"
         state: present
 
     - name: Add CRAN Packages
