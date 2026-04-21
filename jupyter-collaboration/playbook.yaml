@@ -8,9 +8,8 @@
     - name: Installing jupyter-collaboration-codio
       pip:
         name: jupyter-collaboration-codio
-        extra_args: -i https://test.pypi.org/simple/
         state: present
-        version: 4.1.2rc2
+        version: 4.1.2
       become: yes
       become_user: codio
       become_method: su
