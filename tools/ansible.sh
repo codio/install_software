@@ -13,7 +13,8 @@ PY_FLAG=$1
 IS_TRUSTY() { [ "${CODENAME}" == "trusty" ]; }
 IS_XENIAL() { [ "${CODENAME}" == "xenial" ]; }
 IS_BIONIC() { [ "${CODENAME}" == "bionic" ]; }
-IS_JAMMY() { [ "${CODENAME}" == "jammy" ]; }
+IS_JAMMY() { [ "${CODENAME}" == "jammy" ]; } # 22.04
+IS_RESOLUTE() { [ "${CODENAME}" == "resolute" ]; } # 26.04
 USE_PYTHON3() { [ "${PY_FLAG}" == "python3" ]; }
 
 do_cmd()
@@ -65,6 +66,10 @@ if IS_JAMMY; then
     ansible --version | grep -q '2.10' 2> /dev/null
     is_ansible_right=$?
 fi
+if IS_RESOLUTE; then
+    ansible --version | grep -q '2.20' 2> /dev/null
+    is_ansible_right=$?
+fi
 
 if [ $is_ansible_right -ne 0 ]; then
     do_cmd sudo apt-get update
@@ -86,6 +91,10 @@ if [ $is_ansible_right -ne 0 ]; then
     if IS_JAMMY; then
         do_cmd sudo apt update
         do_cmd sudo apt install -y ansible
+    fi
+    if IS_RESOLUTE; then
+        do_cmd sudo apt update
+        do_cmd sudo apt install -y ansible
     else
         do_cmd sudo dpkg -i /tmp/ansible.deb
         do_cmd sudo rm /tmp/ansible.deb
@@ -96,7 +105,7 @@ download_playbook
 
 do_cmd sudo apt-get update
 
-if USE_PYTHON3 || IS_JAMMY; then
+if USE_PYTHON3 || IS_JAMMY || IS_RESOLUTE; then
     sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml" -e 'ansible_python_interpreter=/usr/bin/python3'
 elif IS_TRUSTY; then
     sudo ansible-playbook -v "${COOKBOOK_PATH}/install_software-${BRANCH}/$0/playbook.yaml"
