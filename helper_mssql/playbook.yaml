@@ -29,7 +29,7 @@
       become_user: codio
       pip:
         name: pyodbc
-      when: ansible_facts['distribution_major_version'] | int < 26
+      when: ansible_facts['distribution_major_version'] | int < 22
 
     - name: Install pyodbc
       apt:
@@ -37,7 +37,7 @@
         - python3-pyodbc
         state: present
         update_cache: true
-      when: ansible_facts['distribution_major_version'] | int >= 26
+      when: ansible_facts['distribution_major_version'] | int >= 22
 
     - name: Creates directory
       become_user: codio
