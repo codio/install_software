@@ -32,7 +32,6 @@
       when: ansible_facts['distribution_major_version'] | int < 26
 
     - name: Install pyodbc
-      become_user: codio
       apt:
         pkg:
         - python3-pyodbc
