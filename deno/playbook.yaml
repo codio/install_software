@@ -61,6 +61,15 @@
         name: sourcemap
         executable: pip3
         state: present
+      when: ansible_facts['distribution_major_version'] | int < 22
+
+    - name: Install pyodbc
+      apt:
+        pkg:
+        - python3-pyodbc
+        state: present
+        update_cache: true
+      when: ansible_facts['distribution_major_version'] | int >= 22
     
     - name: Install requests
       become: true
@@ -68,3 +77,12 @@
         name: requests
         executable: pip3
         state: present
+      when: ansible_facts['distribution_major_version'] | int < 22
+
+    - name: Install requests
+      apt:
+        pkg:
+        - python3-requests
+        state: present
+        update_cache: true
+      when: ansible_facts['distribution_major_version'] | int >= 22
