@@ -33,6 +33,15 @@
       become_user: codio
       pip:
         name: psycopg2
+      when: ansible_facts['distribution_major_version'] | int < 22
+
+    - name: Install psycopg2
+      apt:
+        pkg:
+        - python3-psycopg2
+        state: present
+        update_cache: true
+      when: ansible_facts['distribution_major_version'] | int >= 22
 
     - name: Creates directory
       become_user: codio
