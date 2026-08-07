@@ -39,12 +39,23 @@
     # https://github.com/eddelbuettel/r2u
     # https://eddelbuettel.github.io/r2u/
 
-    - name: Add R2U repository into sources list
+    - name: Create temporary directory for R2U keys
+      ansible.builtin.file:
+        path: /tmp/r2ukeys
+        state: directory
+        mode: "0700"
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('26.04', '==')
+
+    - name: Download R2U keys into temporary directory
       ansible.builtin.shell: |
-        gpg --homedir /tmp --no-default-keyring \
-          --keyring /usr/share/keyrings/r2u.gpg \
-          --keyserver keyserver.ubuntu.com \
+        gpg --homedir /tmp/r2ukeys \
+          --keyserver hkps://keyserver.ubuntu.com \
           --recv-keys A1489FE2AB99A21A 67C2D66C4B1D4339 51716619E084DAB9
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('26.04', '==')
+
+    - name: Export R2U keys
+      ansible.builtin.shell: |
+        gpg --homedir /tmp/r2ukeys --export | gpg --dearmor -o /usr/share/keyrings/r2u.gpg
       when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('26.04', '==')
 
     - name: Add R2U repository into sources list
