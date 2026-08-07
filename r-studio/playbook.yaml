@@ -45,7 +45,7 @@
           --keyring /usr/share/keyrings/r2u.gpg \
           --keyserver keyserver.ubuntu.com \
           --recv-keys A1489FE2AB99A21A 67C2D66C4B1D4339 51716619E084DAB9
-      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('22.04', '>')
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('26.04', '==')
 
     - name: Add R2U repository into sources list
       ansible.builtin.copy:
@@ -53,11 +53,11 @@
         content: |
           Types: deb
           URIs: https://r2u.stat.illinois.edu/ubuntu
-          Suites: noble
+          Suites: resolute
           Components: main
           Arch: amd64, arm64
           Signed-By: /usr/share/keyrings/r2u.gpg
-      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('22.04', '>')
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('26.04', '==')
 
     - name: Install R Base
       ansible.builtin.apt:
