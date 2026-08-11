@@ -19,52 +19,51 @@
       apt: name=unzip state=latest
 
     - name: add repo
-      become: yes
-      shell: curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+      shell: curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
 
     - name: Install nodejs
       apt: name=nodejs state=latest
 
     - name: Install Deno
-      become: yes
+      become: true
       become_user: codio
       shell: curl -fsSL https://deno.land/x/install/install.sh | bash -
 
     - name: Check if Deno exists in environment
-      become: yes
+      become: true
       become_user: codio
       shell: grep -q 'export DENO_INSTALL="/home/codio/.deno"' ~/.bashrc
       register: deno_exists
       ignore_errors: True
     
     - name: Check if PATH updated
-      become: yes
+      become: true
       become_user: codio
       shell: grep -q 'export PATH="$DENO_INSTALL/bin:$PATH"' ~/.bashrc
       register: path_updated
       ignore_errors: True
 
     - name: Add deno to PATH
-      become: yes
+      become: true
       become_user: codio
       when: deno_exists.rc > 0
       shell: echo 'export DENO_INSTALL="/home/codio/.deno"'  >> ~/.bashrc
 
     - name: Update PATH
-      become: yes
+      become: true
       become_user: codio
       when: path_updated.rc > 0
       shell: echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.bashrc
 
     - name: Install sourcemap
-      become: yes
+      become: true
       pip:
         name: sourcemap
         executable: pip3
         state: present
     
     - name: Install requests
-      become: yes
+      become: true
       pip:
         name: requests
         executable: pip3
