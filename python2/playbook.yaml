@@ -3,6 +3,11 @@
   become: yes
   become_user: root
   tasks:
+    - name: Fail if running on Ubuntu > 22.04
+      fail:
+        msg: "These tasks should only be run on Ubuntu 22.04 or earlier"
+      when: ansible_distribution != "Ubuntu" or ansible_distribution_version is version('22.04', '>')
+
     - apt: name=python state=present
     - apt: name=python-dev state=present
     - apt: name=python-pip state=present

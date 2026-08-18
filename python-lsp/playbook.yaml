@@ -26,8 +26,19 @@
         update_cache: true
       when: ansible_facts['distribution_major_version'] | int >= 22
     - name: install python-language-server for ubuntu >= 22
-      pip: name=python-language-server version=0.36.2
+      apt:
+        name: python3-pylsp
+        state: present
+        update_cache: true
       when: ansible_facts['distribution_major_version'] | int >= 22
 
     - name: install pycodestyle
       pip: name=pycodestyle
+      when: ansible_facts['distribution_major_version'] | int < 22
+
+    - name: install pycodestyle for ubuntu >= 22
+      apt:
+        name: pycodestyle
+        state: present
+        update_cache: true
+      when: ansible_facts['distribution_major_version'] | int >= 22
