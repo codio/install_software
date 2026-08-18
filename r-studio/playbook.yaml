@@ -3,10 +3,10 @@
   become: yes
   become_user: root
   tasks:
-    - name: Fail if not running on Ubuntu 22.04
+    - name: Fail if running on Ubuntu < 22.04
       fail:
-        msg: "These tasks should only be run on Ubuntu 22.04"
-      when: ansible_distribution != "Ubuntu" or ansible_distribution_version != "22.04"
+        msg: "These tasks should only be run on Ubuntu 22.04 or later"
+      when: ansible_distribution != "Ubuntu" or ansible_distribution_version is version('22.04', '<')
 
     - name: Install essential packages
       ansible.builtin.apt:
@@ -14,6 +14,9 @@
           - build-essential
           - software-properties-common
           - dirmngr
+          - wget
+          - ca-certificates
+          - gnupg
         update_cache: true
 
     - name: Cpan apt key
@@ -31,6 +34,41 @@
     - name: Add CRAN Packages
       ansible.builtin.apt_repository:
         repo: ppa:c2d4u.team/c2d4u4.0+
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('22.04', '==')
+
+    # https://github.com/eddelbuettel/r2u
+    # https://eddelbuettel.github.io/r2u/
+
+    - name: Create temporary directory for R2U keys
+      ansible.builtin.file:
+        path: /tmp/r2ukeys
+        state: directory
+        mode: "0700"
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('26.04', '==')
+
+    - name: Download R2U keys into temporary directory
+      ansible.builtin.shell: |
+        gpg --homedir /tmp/r2ukeys \
+          --keyserver hkps://keyserver.ubuntu.com \
+          --recv-keys A1489FE2AB99A21A 67C2D66C4B1D4339 51716619E084DAB9
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('26.04', '==')
+
+    - name: Export R2U keys
+      ansible.builtin.shell: |
+        gpg --homedir /tmp/r2ukeys --export | gpg --dearmor -o /usr/share/keyrings/r2u.gpg
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('26.04', '==')
+
+    - name: Add R2U repository into sources list
+      ansible.builtin.copy:
+        dest: /etc/apt/sources.list.d/r2u.sources
+        content: |
+          Types: deb
+          URIs: https://r2u.stat.illinois.edu/ubuntu
+          Suites: resolute
+          Components: main
+          Arch: amd64, arm64
+          Signed-By: /usr/share/keyrings/r2u.gpg
+      when: ansible_distribution == "Ubuntu" and ansible_distribution_version is version('26.04', '==')
 
     - name: Install R Base
       ansible.builtin.apt:
@@ -39,7 +77,7 @@
 
     - name: Install r studio .deb package
       ansible.builtin.apt:
-        deb: https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2026.01.0-392-amd64.deb
+        deb: https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2026.07.1-147-amd64.deb
 
     - name: Create systemd Rstudio config
       ansible.builtin.copy:
