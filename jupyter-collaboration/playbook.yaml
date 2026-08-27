@@ -8,7 +8,7 @@
     - name: Installing jupyter-collaboration-codio
       pip:
         name: jupyter-collaboration-codio
-        extra_args: -i https://test.pypi.org/simple/
+        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
         version: 4.1.4rc0
       become: yes
