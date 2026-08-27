@@ -55,7 +55,7 @@
     - name: "Install Jupyter Notebook Codio extension"
       pip:
         name: jupyter-notebook-codio-ext
-        extra_args: -i https://test.pypi.org/simple/
+        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
         version: 0.1.11
       become: yes
@@ -117,7 +117,7 @@
     - name: "Install Jupyter Lab v3 Codio extension"
       pip:
         name: jupyterlab-v3-codio-ext
-        extra_args: -i https://test.pypi.org/simple/
+        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
         version: 0.1.26
       become: yes
@@ -132,7 +132,7 @@
     - name: "Install Jupyter Lab v4 Codio extension"
       pip:
         name: jupyterlab-v4-codio-ext
-        extra_args: -i https://test.pypi.org/simple/
+        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
         version: 0.1.22
       become: yes
