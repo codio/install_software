@@ -25,7 +25,16 @@
     - name: Install mysql-connector-python
       become_user: codio
       pip:
-        name: mysql-connector-python==8.2.0
+        name: mysql-connector-python==26.7.0
+      when: ansible_facts['distribution_major_version'] | int < 22
+
+    - name: Install mysql-connector-python
+      apt:
+        pkg:
+        - python3-mysql.connector
+        state: present
+        update_cache: true
+      when: ansible_facts['distribution_major_version'] | int >= 22
 
     - name: Creates directory
       become_user: codio

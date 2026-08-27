@@ -10,7 +10,7 @@
         name: jupyter-collaboration-codio
         extra_args: -i https://test.pypi.org/simple/
         state: present
-        version: 4.1.3rc2
+        version: 4.1.4rc0
       become: yes
       become_user: codio
       become_method: su
