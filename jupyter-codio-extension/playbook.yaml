@@ -4,19 +4,145 @@
   become_user: root
   tasks:
 
-    - name: "Install Jupyter Notebook Codio extension"
-      command: /usr/share/codio-tools/jupyter-codio-extension/scripts/installer/jupyter-codio-extension-installer --mode=notebook
+    - name: Has jupyter
+      command: which jupyter
+      register: jupyter_path
+      ignore_errors: yes
       become: yes
       become_user: codio
       become_method: su
       become_flags: -l
 
-    - name: "Install Jupyter Lab Codio extension"
-      command: /usr/share/codio-tools/jupyter-codio-extension/scripts/installer/jupyter-codio-extension-installer
+    - debug: var=jupyter_path
+
+    - name: Fail if no jupyter
+      fail:
+        msg: "Jupyter is not installed"
+      when: jupyter_path.stdout == ""
+
+    # Jupyter Notebook
+    - name: Check if jupyter notebook is installed
+      command: jupyter notebook --version
+      register: jupyter_notebook_version
+      ignore_errors: yes
       become: yes
       become_user: codio
       become_method: su
       become_flags: -l
+
+    - debug: var=jupyter_notebook_version
+
+    - name: Check if jupyter nbextension is installed
+      command: jupyter nbextension --version
+      register: jupyter_nbextension_version
+      ignore_errors: yes
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+
+    - debug: var=jupyter_nbextension_version
+
+    - name: Uninstall old Jupyter Notebook Codio extension
+      command: /usr/share/codio-tools/jupyter-codio-extension/scripts/installer/jupyter-codio-extension-installer --mode=uninstall-notebook
+      ignore_errors: yes
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      when: jupyter_nbextension_version.rc == 0
+
+    - name: "Install Jupyter Notebook Codio extension"
+      pip:
+        name: jupyter-notebook-codio-ext
+        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
+        state: present
+        version: 0.1.11
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      when: jupyter_nbextension_version.rc == 0
+
+    # Jupyter Lab
+    - name: Check JupyterLab version
+      ansible.builtin.shell: |
+        jupyter --version 2>/dev/null |
+          sed -nE 's/^jupyterlab[[:space:]]*:[[:space:]]*(.*)$/\1/p'
+      register: jupyterlab_version
+      changed_when: false
+      failed_when: false
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+
+    - debug: var=jupyterlab_version
+
+    - name: Check JupyterLab < 4
+      debug:
+        msg: "jupyter version is less than 4"
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int < 4
+
+    - name: Check JupyterLab == 4
+      debug:
+        msg: "jupyter version is 4"
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int == 4
+
+    - name: Check JupyterLab > 4
+      debug:
+        msg: "jupyter version is more than 4"
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int > 4
+
+    - name: Uninstall old Jupyter Lab Codio extension
+      command: /usr/share/codio-tools/jupyter-codio-extension/scripts/installer/jupyter-codio-extension-installer --mode=uninstall
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int >= 3
+
+    - name: "Install Jupyter Lab v3 Codio extension"
+      pip:
+        name: jupyterlab-v3-codio-ext
+        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
+        state: present
+        version: 0.1.27
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int == 3
+
+    - name: "Install Jupyter Lab v4 Codio extension"
+      pip:
+        name: jupyterlab-v4-codio-ext
+        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
+        state: present
+        version: 0.1.22
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int == 4
 
     - name: "Restart Jupyter"
       systemd:
