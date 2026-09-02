@@ -3,11 +3,53 @@
   become: true
   tasks:
 
+    - name: Has jupyter
+      command: which jupyter
+      register: jupyter_path
+      ignore_errors: yes
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+
+    - debug: var=jupyter_path
+
+    - name: Fail if no jupyter
+      fail:
+        msg: "Jupyter is not installed"
+      when: jupyter_path.stdout == ""
+
+    # Jupyter Lab
+    - name: Check JupyterLab version
+      ansible.builtin.shell: |
+        jupyter --version 2>/dev/null |
+          sed -nE 's/^jupyterlab[[:space:]]*:[[:space:]]*(.*)$/\1/p'
+      register: jupyterlab_version
+      changed_when: false
+      failed_when: false
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+
+    - name: Fail jupyter lab is less than 4.4 or does not exist
+      fail:
+        msg: "Jupyter Lab version must be 4.4 or higher"
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int < 4 or
+        ((jupyterlab_version.stdout | trim).split('.')[0] | int == 4 and
+         (jupyterlab_version.stdout | trim).split('.')[1] | int < 4)
+
     - apt: update_cache=yes
 
-    - name: Installing notebook and nbgrader
+    - name: Installing jupyter-collaboration-codio
       pip:
-        name: jupyter-collaboration
+        name: jupyter-collaboration-codio
+        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
+        state: present
+        version: 4.1.4rc0
       become: yes
       become_user: codio
       become_method: su
@@ -15,56 +57,6 @@
       register: aptout
 
     - debug: var=aptout
-
-    - name: Remove jupyter-server-ydoc
-      pip:
-        name: jupyter-server-ydoc
-        state: absent
-      become: yes
-      become_user: codio
-      become_method: su
-      become_flags: -l
-      register: aptout1
-
-    - debug: var=aptout1
-
-    - name: Install jupyter-server-ydoc-codio
-      pip:
-        name: jupyter-server-ydoc-codio
-        state: present
-        version: 2.1.1
-      become: yes
-      become_user: codio
-      become_method: su
-      become_flags: -l
-      register: aptout2
-
-    - debug: var=aptout2
-
-    - name: Remove jupyter-docprovider
-      pip:
-        name: jupyter-docprovider
-        state: absent
-      become: yes
-      become_user: codio
-      become_method: su
-      become_flags: -l
-      register: aptoutdocprovider
-
-    - debug: var=aptoutdocprovider
-
-    - name: Install jupyter-docprovider-codio
-      pip:
-        name: jupyter-docprovider-codio
-        state: present
-        version: 2.1.1
-      become: yes
-      become_user: codio
-      become_method: su
-      become_flags: -l
-      register: aptoutdocprovider2
-
-    - debug: var=aptoutdocprovider2
 
     - name: jupyter restarted
       systemd:
