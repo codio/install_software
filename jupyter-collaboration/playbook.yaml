@@ -3,6 +3,45 @@
   become: true
   tasks:
 
+    - name: Has jupyter
+      command: which jupyter
+      register: jupyter_path
+      ignore_errors: yes
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+
+    - debug: var=jupyter_path
+
+    - name: Fail if no jupyter
+      fail:
+        msg: "Jupyter is not installed"
+      when: jupyter_path.stdout == ""
+
+    # Jupyter Lab
+    - name: Check JupyterLab version
+      ansible.builtin.shell: |
+        jupyter --version 2>/dev/null |
+          sed -nE 's/^jupyterlab[[:space:]]*:[[:space:]]*(.*)$/\1/p'
+      register: jupyterlab_version
+      changed_when: false
+      failed_when: false
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+
+    - name: Fail jupyter lab is less than 4.4 or does not exist
+      fail:
+        msg: "Jupyter Lab version must be 4.4 or higher"
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int < 4 or
+        ((jupyterlab_version.stdout | trim).split('.')[0] | int == 4 and
+         (jupyterlab_version.stdout | trim).split('.')[1] | int < 4)
+
     - apt: update_cache=yes
 
     - name: Installing jupyter-collaboration-codio
