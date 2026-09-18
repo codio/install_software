@@ -127,7 +127,7 @@
         name: jupyterlab-v3-codio-ext
         extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
-        version: 0.1.28
+        version: 0.1.29
       become: yes
       become_user: codio
       become_method: su
@@ -153,7 +153,7 @@
         name: jupyterlab-v4-codio-ext
         extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
-        version: 0.1.23
+        version: 0.1.25
       become: yes
       become_user: codio
       become_method: su
