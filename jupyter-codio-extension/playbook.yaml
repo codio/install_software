@@ -57,7 +57,15 @@
         name: jupyter-notebook-codio-ext
         extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
-        version: 0.1.11
+        version: 0.1.12
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      when: jupyter_nbextension_version.rc == 0
+
+    - name: "Update Jupyter Notebook Codio extension config"
+      command: jupyter-notebook-codio-ext-cli --env "https://test2-codio.com"
       become: yes
       become_user: codio
       become_method: su
@@ -119,7 +127,18 @@
         name: jupyterlab-v3-codio-ext
         extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
-        version: 0.1.27
+        version: 0.1.28
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int == 3
+
+    - name: "Update Jupyter Lab v3 Codio extension config"
+      command: jupyterlab-v3-codio-ext-cli --env "https://test2-codio.com"
       become: yes
       become_user: codio
       become_method: su
@@ -134,7 +153,18 @@
         name: jupyterlab-v4-codio-ext
         extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
-        version: 0.1.22
+        version: 0.1.23
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      when: >
+        jupyterlab_version.rc != 0 or
+        jupyterlab_version.stdout | trim == '' or
+        (jupyterlab_version.stdout | trim).split('.')[0] | int == 4
+
+    - name: "Update Jupyter Lab v4 Codio extension config"
+      command: jupyterlab-v4-codio-ext-cli --env "https://test2-codio.com"
       become: yes
       become_user: codio
       become_method: su
