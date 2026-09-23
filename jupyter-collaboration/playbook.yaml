@@ -44,19 +44,37 @@
 
     - apt: update_cache=yes
 
-    - name: Installing jupyter-collaboration-codio
+    - name: Installing jupyter-collaboration-codio for jupyterlab >=4.4.x <4.6.0
       pip:
         name: jupyter-collaboration-codio
         extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
         state: present
-        version: 4.1.4rc0
+        version: 4.4.6rc1
       become: yes
       become_user: codio
       become_method: su
       become_flags: -l
       register: aptout
+      when: jupyterlab_version.stdout | trim is version('4.4', '>=') and jupyterlab_version.stdout | trim is version('4.6', '<')
 
     - debug: var=aptout
+      when: jupyterlab_version.stdout | trim is version('4.4', '>=') and jupyterlab_version.stdout | trim is version('4.6', '<')
+
+    - name: Installing jupyter-collaboration-codio for jupyterlab >= 4.6.0
+      pip:
+        name: jupyter-collaboration-codio
+        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/
+        state: present
+        version: 5.0.6rc1
+      become: yes
+      become_user: codio
+      become_method: su
+      become_flags: -l
+      register: aptout1
+      when: jupyterlab_version.stdout | trim is version('4.6', '>=')
+
+    - debug: var=aptout1
+      when: jupyterlab_version.stdout | trim is version('4.6', '>=')
 
     - name: jupyter restarted
       systemd:
