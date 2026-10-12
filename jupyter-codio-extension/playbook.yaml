@@ -87,29 +87,9 @@
 
     - debug: var=jupyterlab_version
 
-    - name: Check JupyterLab < 4
-      debug:
-        msg: "jupyter version is less than 4"
-      when: >
-        jupyterlab_version.rc != 0 or
-        jupyterlab_version.stdout | trim == '' or
-        (jupyterlab_version.stdout | trim).split('.')[0] | int < 4
-
-    - name: Check JupyterLab == 4
-      debug:
-        msg: "jupyter version is 4"
-      when: >
-        jupyterlab_version.rc != 0 or
-        jupyterlab_version.stdout | trim == '' or
-        (jupyterlab_version.stdout | trim).split('.')[0] | int == 4
-
-    - name: Check JupyterLab > 4
-      debug:
-        msg: "jupyter version is more than 4"
-      when: >
-        jupyterlab_version.rc != 0 or
-        jupyterlab_version.stdout | trim == '' or
-        (jupyterlab_version.stdout | trim).split('.')[0] | int > 4
+    - name: Set JupyterLab major version
+      set_fact:
+        jupyterlab_major: "{{ (jupyterlab_version.stdout | trim).split('.')[0] | int if (jupyterlab_version.stdout | trim) else 0 }}"
 
     - name: Uninstall old Jupyter Lab Codio extension
       command: /usr/share/codio-tools/jupyter-codio-extension/scripts/installer/jupyter-codio-extension-installer --mode=uninstall
@@ -118,9 +98,7 @@
       become_method: su
       become_flags: -l
       when: >
-        jupyterlab_version.rc != 0 or
-        jupyterlab_version.stdout | trim == '' or
-        (jupyterlab_version.stdout | trim).split('.')[0] | int >= 3
+        jupyterlab_major >= 3
 
     - name: "Install Jupyter Lab v3 Codio extension"
       pip:
@@ -133,9 +111,7 @@
       become_method: su
       become_flags: -l
       when: >
-        jupyterlab_version.rc != 0 or
-        jupyterlab_version.stdout | trim == '' or
-        (jupyterlab_version.stdout | trim).split('.')[0] | int == 3
+        jupyterlab_major == 3
 
     - name: "Update Jupyter Lab v3 Codio extension config"
       command: jupyterlab-v3-codio-ext-cli --env "https://test1-codio.com"
@@ -144,9 +120,7 @@
       become_method: su
       become_flags: -l
       when: >
-        jupyterlab_version.rc != 0 or
-        jupyterlab_version.stdout | trim == '' or
-        (jupyterlab_version.stdout | trim).split('.')[0] | int == 3
+        jupyterlab_major == 3
 
     - name: "Install Jupyter Lab v4 Codio extension"
       pip:
@@ -159,9 +133,7 @@
       become_method: su
       become_flags: -l
       when: >
-        jupyterlab_version.rc != 0 or
-        jupyterlab_version.stdout | trim == '' or
-        (jupyterlab_version.stdout | trim).split('.')[0] | int == 4
+        jupyterlab_major == 4
 
     - name: "Update Jupyter Lab v4 Codio extension config"
       command: jupyterlab-v4-codio-ext-cli --env "https://test1-codio.com"
@@ -170,9 +142,7 @@
       become_method: su
       become_flags: -l
       when: >
-        jupyterlab_version.rc != 0 or
-        jupyterlab_version.stdout | trim == '' or
-        (jupyterlab_version.stdout | trim).split('.')[0] | int == 4
+        jupyterlab_major == 4
 
     - name: "Restart Jupyter"
       systemd:
