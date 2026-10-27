@@ -11,7 +11,7 @@ User=codio
 Group=codio
 WorkingDirectory=/home/codio/workspace
 ExecStartPre=/bin/rm -rf /home/codio/.rstudio/sessions/active
-ExecStart=/usr/lib/rstudio-server/bin/rserver --server-daemonize=0 --auth-none=1 --server-user=codio --server-pid-file=/tmp/rstudio.pid --server-data-dir=/home/codio/rserver/ --www-address=0.0.0.0
+ExecStart=/usr/lib/rstudio-server/bin/rserver --server-daemonize=0 --auth-none=1 --server-user=codio --server-pid-file=/tmp/rstudio.pid --server-data-dir=/home/codio/rserver/
 #ExecStop=/usr/bin/killall -TERM rserver
 #KillMode=none
 Restart=on-failure
