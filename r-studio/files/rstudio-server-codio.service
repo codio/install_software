@@ -2,6 +2,8 @@
 Description=RStudio Server for Codio
 Wants=network-online.target
 After=network-online.target
+StartLimitIntervalSec=120
+StartLimitBurst=20
 
 [Service]
 Type=simple
@@ -13,6 +15,7 @@ ExecStart=/usr/lib/rstudio-server/bin/rserver --server-daemonize=0 --auth-none=1
 #ExecStop=/usr/bin/killall -TERM rserver
 #KillMode=none
 Restart=on-failure
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
