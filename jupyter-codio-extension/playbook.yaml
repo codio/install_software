@@ -55,17 +55,8 @@
     - name: "Install Jupyter Notebook Codio extension"
       pip:
         name: jupyter-notebook-codio-ext
-        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ --user
         state: present
         version: 0.1.16
-      become: yes
-      become_user: codio
-      become_method: su
-      become_flags: -l
-      when: jupyter_nbextension_version.rc == 0
-
-    - name: "Update Jupyter Notebook Codio extension config"
-      command: /home/codio/.local/bin/jupyter-notebook-codio-ext-cli env "https://test2-codio.com"
       become: yes
       become_user: codio
       become_method: su
@@ -103,18 +94,8 @@
     - name: "Install Jupyter Lab v3 Codio extension"
       pip:
         name: jupyterlab-v3-codio-ext
-        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ --user
         state: present
         version: 0.1.32
-      become: yes
-      become_user: codio
-      become_method: su
-      become_flags: -l
-      when: >
-        jupyterlab_major == 3
-
-    - name: "Update Jupyter Lab v3 Codio extension config"
-      command: /home/codio/.local/bin/jupyterlab-v3-codio-ext-cli env "https://test2-codio.com"
       become: yes
       become_user: codio
       become_method: su
@@ -125,18 +106,8 @@
     - name: "Install Jupyter Lab v4 Codio extension"
       pip:
         name: jupyterlab-v4-codio-ext
-        extra_args: -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ --user
         state: present
         version: 0.1.28
-      become: yes
-      become_user: codio
-      become_method: su
-      become_flags: -l
-      when: >
-        jupyterlab_major == 4
-
-    - name: "Update Jupyter Lab v4 Codio extension config"
-      command: /home/codio/.local/bin/jupyterlab-v4-codio-ext-cli env "https://test2-codio.com"
       become: yes
       become_user: codio
       become_method: su
