@@ -65,7 +65,7 @@
 
     # Jupyter Lab
     - name: Check JupyterLab version
-      ansible.builtin.shell: |
+      shell: |
         jupyter --version 2>/dev/null |
           sed -nE 's/^jupyterlab[[:space:]]*:[[:space:]]*(.*)$/\1/p'
       register: jupyterlab_version
@@ -89,7 +89,7 @@
       become_method: su
       become_flags: -l
       when: >
-        jupyterlab_major >= 3
+        jupyterlab_major | int >= 3
 
     - name: "Install Jupyter Lab v3 Codio extension"
       pip:
@@ -101,7 +101,7 @@
       become_method: su
       become_flags: -l
       when: >
-        jupyterlab_major == 3
+        jupyterlab_major | int == 3
 
     - name: "Install Jupyter Lab v4 Codio extension"
       pip:
@@ -113,7 +113,7 @@
       become_method: su
       become_flags: -l
       when: >
-        jupyterlab_major == 4
+        jupyterlab_major | int == 4
 
     - name: "Restart Jupyter"
       systemd:
